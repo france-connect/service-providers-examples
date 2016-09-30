@@ -21,11 +21,17 @@
     "passport-openidconnect": "0.0.1",
     "remove": "~0.1.5",
     "request": "~2.45.0",
-    "serve-favicon": "~2.1.5"
+    "serve-favicon": "~2.1.5",
+    "jwt-simple": {
+      "version": "0.2.0",
+      "from": "jwt-simple@~0.2.0",
+      "resolved": "https://registry.npmjs.org/jwt-simple/-/jwt-simple-0.2.0.tgz"
+    }
   },
   "devDependencies": {
     "chai": "^1.10.0",
     "mocha": "^2.1.0",
     "sinon": "^1.12.2"
   }
+
 }

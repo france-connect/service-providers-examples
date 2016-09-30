@@ -1,9 +1,11 @@
+var jwt = require('jwt-simple');
 var url = require('url');
 var querystring = require('querystring');
 var _ = require('lodash');
 var OAuth2 = require('oauth').OAuth2;
 var crypto = require('crypto');
 var _userInfoURLBase = '';
+var idTokenHelper = require('../helpers/idTokenHelper.js');
 
 var _acr_values = null;
 
@@ -116,9 +118,14 @@ PassportAuthenticateWithCustomClaims.prototype.authenticate = function(req, opti
                                     middleName: json.middle_name
                                 };
 
-                                profile._raw = body;
+                                if (json._claim_sources && idTokenHelper.isDecodableToken(json._claim_sources.src1.JWT , self._clientSecret)) {
+                                    var jwtClaims = idTokenHelper.convertIdTokenToJwt(json._claim_sources.src1.JWT);
+                                    json._claim_sources.src1 = jwtClaims;
+                                }
 
+                                profile._raw = body;
                                 profile._json = json;
+
                             }
                             catch (e) {
                                 console.error('error parsing id token from FI ' + req.headers.referer + ': ' + e);
