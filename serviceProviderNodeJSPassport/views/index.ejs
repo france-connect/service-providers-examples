@@ -18,7 +18,11 @@
                 <% if (userInfo.address) { %>
                 address.formatted: <%= userInfo.address.formatted %><br>
                 <% } %>
-                phone_number: <%= userInfo.phone_number %><br>">
+                phone_number: <%= userInfo.phone_number %><br>
+                <% if (userInfo._claim_names) { %>
+                claim_names.role: <%= userInfo._claim_names.role %><br>
+                claim_sources.src1: <%= userInfo._claim_sources.src1 %><br>
+                <% } %>">
                     Bonjour <%= ((userInfo.gender === 'male') ? 'M. ' : 'Mme ') + userInfo.family_name %>
                 </a><span class="caret"></span>
             </h4>
@@ -28,8 +32,6 @@
             ou démarches municipales en ligne.</p>
 
         <p>L'espace usager vous offre la possibilité de suivre ces demandes 24h/24 et 7 jours/7</p>
-
-        <p>Sachez en tout cas que vous avez les droits suivant: <%= userInfo._claim_names.role %>  avec la valeur: <%= userInfo._claim_sources.src1 %></p>
     </div>
 
     <div class="span3 well well-gu">
