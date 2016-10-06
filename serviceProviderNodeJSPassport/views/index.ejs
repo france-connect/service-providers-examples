@@ -18,11 +18,7 @@
                 <% if (userInfo.address) { %>
                 address.formatted: <%= userInfo.address.formatted %><br>
                 <% } %>
-                phone_number: <%= userInfo.phone_number %><br>
-                <% if (userInfo._claim_names) { %>
-                claim_names.role: <%= userInfo._claim_names.role %><br>
-                claim_sources.src1: <%= userInfo._claim_sources.src1 %><br>
-                <% } %>">
+                phone_number: <%= userInfo.phone_number %><br>">
                     Bonjour <%= ((userInfo.gender === 'male') ? 'M. ' : 'Mme ') + userInfo.family_name %>
                 </a><span class="caret"></span>
             </h4>
