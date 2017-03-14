@@ -15,10 +15,10 @@ var parameters = {
     clientSecret: config.openIdConnectStrategyParameters.clientSecret,
     callbackURL: config.oauth.callbackURL,
     scope: config.oauth.scopes,
-    skipUserProfile:true
+    skipUserProfile: true
 };
 
-var strat = function() {
+var strat = function () {
     var strategy = new Oauth2Strategy(
         parameters,
         function (iss, sub, profile, accessToken, refreshToken, done) {
@@ -51,10 +51,6 @@ router.get('/', function (req, res, next) {
 
 router.get('/form', function (req, res) {
     if (req.session.passport.user) {
-        req.session.userInfo =  req.session.passport.user.name ? req.session.passport.user : req.session.userInfo;
-        if (!req.session.user) {
-            req.session.user = req.session.userInfo.name.givenName + " " + req.session.userInfo.name.familyName;
-        }
         res.render('demarche-form.ejs', {
             title: 'Démonstrateur France Connect - Inscription à la cantine scolaire',
             user: req.session.user,
@@ -98,6 +94,7 @@ router.get('/authOk', function (req, res, next) {
             next(new Error('No Body'));
         }
         else if (response.statusCode != 200) {
+            console.log(response);
             if (response.headers['www-authenticate']) {
                 var error = new Error();
                 var errorElements = response.headers['www-authenticate'].trim().match('Bearer: error="(.*?)",error_description="(.*?)"');
@@ -142,7 +139,7 @@ function userDoesNotHaveSessionDataYet(req) {
 }
 router.get('/done', function (req, res, next) {
     if (userDoesNotHaveSessionDataYet(req)) {
-        res.redirect('/');
+        return res.redirect('/');
     } else {
         res.render('demarche-etape2.ejs', {
             title: 'Démonstrateur France Connect - Confirmez votre inscription',
