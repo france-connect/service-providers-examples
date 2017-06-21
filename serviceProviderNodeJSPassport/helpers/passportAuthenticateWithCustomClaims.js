@@ -4,6 +4,8 @@ var _ = require('lodash');
 var OAuth2 = require('oauth').OAuth2;
 var crypto = require('crypto');
 var _userInfoURLBase = '';
+var idTokenHelper = require('../helpers/idTokenHelper.js');
+var configManager = new (require('./configManager.js'))();
 
 var _acr_values = null;
 
@@ -116,6 +118,13 @@ PassportAuthenticateWithCustomClaims.prototype.authenticate = function(req, opti
                                     middleName: json.middle_name
                                 };
 
+                                if (configManager &&
+                                    json._claim_sources &&
+                                    idTokenHelper.isDecodableToken(json._claim_sources.src1.JWT, self._clientSecret)) {
+                                    var jwtClaims = idTokenHelper.convertIdTokenToJwt(json._claim_sources.src1.JWT);
+                                    json._claim_sources.src1 = JSON.parse(jwtClaims);
+                                    console.log("_claim_sources", json._claim_sources.src1);
+                                }
                                 profile._raw = body;
                                 profile._json = json;
 
