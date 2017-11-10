@@ -62,22 +62,11 @@
                     </div>
                 </div>
             </fieldset>
-            <input type="submit" value="Confirmer" class="btn btn-large" onclick="submitInPopup()">
+            <input type="submit" value="Confirmer" class="btn btn-large">
             <br/>
             <span style="text-size:8px">* Vous allez ensuite être redirigé vers une page qui va vous montrer les données auxquelles va accéder le service pour compléter votre demande. Nous aurons besoin de votre consentement.</span>
         </form>
     </div>
 </div>
-<script type="text/javascript">
-    function submitInPopup() {
-        var screenTabletWith = 767;
-        if ($(window).width() > screenTabletWith) {
-            $("#crecheForm").submit(function () {
-                OpenPopupCenter(this.action, 'authFranceConnect', 500, 600);
-            });
-        } else {
-            $("#crecheForm").unbind().attr('target', '');
-        }
-    }
-</script>
+
 <% include includes/footer %>
