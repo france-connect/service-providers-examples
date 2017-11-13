@@ -21,7 +21,6 @@ var dataRoutes = require('./routes/data');
 
 var app = express();
 
-
 app.set('port', process.env.PORT || 3001);
 
 // view engine setup
