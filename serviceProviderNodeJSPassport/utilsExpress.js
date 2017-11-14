@@ -1,23 +1,18 @@
+'use strict'
+
 /**
-*   call app[method] for each middleware
-*  @param {Object} app
+*   call obj[method] on each element in array
+*  @param {Object} obj
 *  @param {String} method
 *  @param {Array} arr
 */
 
-const applyMethod = (app, method, arr) => arr.forEach(el => app[method](el))
+const callObjMethodOnArray = (obj, method, arr) => arr.forEach(el => obj[method](el))
 
-const initMiddleWares = (app, method, arr) => {
-  return method === 'use' || method === 'get' || method === 'set'
-  ? applyMethod(app, method, arr)
-  : console.log('Error Fatal')
-}
-
-const setPort => port => applyMethod(app, 'set', )
-
-app.set('port', process.env.PORT || 3001);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+const initMiddleWares = (app, method, arr) =>
+  method === 'use' || method === 'get' || method === 'set'
+  ? callObjMethodOnArray(app, method, arr)
+  : console.og('Wrong method name :' , method)
 
 module.exports = {
   initMiddleWares
