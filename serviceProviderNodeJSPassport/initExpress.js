@@ -14,14 +14,14 @@ const dataRoutes = require('./routes/data');
 // will print stacktrace for dev not for pro
 const errorHandlerDev = () => {
   // catch 404 and forward to error handler
-  app.use(function(req, res, next) {
+  app.use((req, res, next) => {
       let err = new Error('Not Found');
       err.status = 404;
       next(err);
   });
 
   if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -29,7 +29,7 @@ const errorHandlerDev = () => {
         });
     });
   }
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
       res.status(err.status || 500);
       res.render('error', {
           message: err.message,
@@ -38,9 +38,9 @@ const errorHandlerDev = () => {
   })
 }
 
-const strat = function() {
+const getStrategy = () => {
   const strategy = new openIdConnectStrategy(config.openIdConnectStrategyParameters, function (iss, sub, profile, accesstoke, refreshtoken, done) {
-    process.nextTick(function () {
+    process.nextTick(() => {
       done(null, profile);
     })
   });
@@ -52,22 +52,18 @@ const strat = function() {
 
 const initExpress = (app, middleWares) => {
    initMiddleWares(app, 'use', middleWares);
-   app.set('port', process.env.PORT || 3001)
-   app.set('views', path.join(__dirname, 'views'))
-   app.set('view engine', 'ejs')
+   app.set('port', process.env.PORT || 3001);
+   app.set('views', path.join(__dirname, 'views'));
+   app.set('view engine', 'ejs');
 
-   passport.use('provider', strat());
+   passport.use('provider', getStrategy());
    passport.serializeUser((user, done) => done(null, user));
    passport.deserializeUser((obj, done) => done(null, obj));
 
    app.use('/', indexRoutes);
    app.use('/data', dataRoutes);
-
    app.locals.FCUrl = config.fcURL;
-
 }
-
-
 
 module.exports = {
   initExpress
