@@ -19,7 +19,7 @@ describe('index page (/)', function(){
         //assert
         assert.equal(res.render.calledOnce, true);
         assert.equal(res.render.getCall(0).args[0], 'index');
-        assert.deepEqual(res.render.getCall(0).args[1], {title: 'Démonstrateur France Connect - Accueil', user: 'john', userInfo: {given_name: 'john'}});
+        assert.deepEqual(res.render.getCall(0).args[1], { agentMode: false, title: 'Démonstrateur France Connect - Accueil', user: 'john', userInfo: {given_name: 'john'}});
     });
 
     it('should render the page with an "undefined" user data if there is no user data in the session and no passport session either', function(){
@@ -31,7 +31,7 @@ describe('index page (/)', function(){
         //assert
         assert.equal(res.render.calledOnce, true);
         assert.equal(res.render.getCall(0).args[0], 'index');
-        assert.deepEqual(res.render.getCall(0).args[1], {title: 'Démonstrateur France Connect - Accueil', user: undefined, userInfo: undefined});
+        assert.deepEqual(res.render.getCall(0).args[1], { agentMode: false, title: 'Démonstrateur France Connect - Accueil', user: undefined, userInfo: undefined});
     });
 
     it('should set req.session.user data before rendering if passport session data is available', function(){
@@ -43,7 +43,7 @@ describe('index page (/)', function(){
         //assert
         assert.equal(res.render.calledOnce, true);
         assert.equal(res.render.getCall(0).args[0], 'index');
-        assert.deepEqual(res.render.getCall(0).args[1], {title: 'Démonstrateur France Connect - Accueil',
+        assert.deepEqual(res.render.getCall(0).args[1], { agentMode: false, title: 'Démonstrateur France Connect - Accueil',
             user: 'John Oliver',
             userInfo: {family_name: 'Oliver', given_name: 'John'}
         });
