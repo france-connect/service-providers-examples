@@ -1,8 +1,8 @@
 'use strict'
 
-if(!process.env.NODE_ENV){
-    process.env.NODE_ENV = 'development';
-}
+// if(!process.env.NODE_ENV){
+//     process.env.NODE_ENV = 'development';
+// }
 
 const debug = require('debug')('serviceProvider1');
 const express = require('express');
@@ -24,11 +24,16 @@ const middleWares = [
       bodyParser.urlencoded({ extended: false }),
       cookieParser(),
       express.static(path.join(__dirname, 'public')),
-      session({ secret: 'Some Secret !!!', key: 'sid'}),
+      session({
+         secret: 'Some Secret !!!',
+         key: 'sid',
+         saveUninitialized: true,
+         resave: true,
+       }),
       passport.initialize(),
       passport.session(),
-      // 'openidconnect'
 ];
+// 'openidconnect'
 
 initExpress(app, middleWares)
 

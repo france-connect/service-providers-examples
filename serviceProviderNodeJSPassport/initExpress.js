@@ -56,7 +56,8 @@ const initExpress = (app, middleWares) => {
    app.set('views', path.join(__dirname, 'views'));
    app.set('view engine', 'ejs');
 
-   passport.use('provider', getStrategy());
+   // passport.use(getStrategy());
+   passport.use(new openIdConnectStrategy(config.openIdConnectStrategyParameters))
    passport.serializeUser((user, done) => done(null, user));
    passport.deserializeUser((obj, done) => done(null, obj));
 
