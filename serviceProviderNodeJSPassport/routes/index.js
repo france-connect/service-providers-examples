@@ -18,6 +18,7 @@ function checkStateParams(req, res, next) {
 router.get('/', checkStateParams,indexController.handleMain);
 
 router.get('/login_org', passport.authenticate('openidconnect'), function (req, res) {
+  console.log('pouet');
 });
 
 router.get('/oidc_callback', checkStateParams, function (req, res, next) {

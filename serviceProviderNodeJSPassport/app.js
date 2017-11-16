@@ -41,4 +41,5 @@ const server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
 
+console.log('gogo');
 module.exports = app;
