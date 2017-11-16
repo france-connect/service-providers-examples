@@ -2,23 +2,25 @@
   "env": "development",
   "fcURL": "https://fca.dev-cw.dev-franceconnect.fr/",
   "openIdConnectStrategyParameters": {
-    "clientID": "6b7810faf431be33d89166cf605ca806",
-    "clientSecret": "c282d4d8a6670db9b66f490cbda1a746",
-    "callbackURL": "https://guichet-parisiens.integ01.dev-franceconnect.fr/oidc_callback",
+    "clientID": "d8cdadb60baa936e0718f18cd0a274e8",
+    "clientSecret": "8ea07bbd5e8ab2bca835c6beb9d03064",
+    "callbackURL": "https://fsa2.dev-cw.dev-franceconnect.fr/oidc_callback?testkey=testvalue",
     "authorizationURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/authorize",
     "tokenURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/token",
     "userInfoURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/userinfo",
     "logoutURL":"https://fca.dev-cw.dev-franceconnect.fr/api/v1/logout",
-    "acr_values":"eidas2",
-    "scope": ["profile", "email", "address", "phone", "openid", "birth"],
-    "nonce": "timestamp 1234",
-    "state": "testServiceCode"
+    "acr_values":"eidas2 siren elu",
+    "scope": ["profile", "email", "address", "phone", "openid", "preferred_username", "birth"]
+   },
+  "session": {
+    "secure": true
   },
   "oauth": {
     "authorizationURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/authorize",
     "tokenURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/token",
-    "callbackURL": "https://guichet-parisiens.integ01.dev-franceconnect.fr/oidc_callback",
+    "callbackURL": "https://fsa2.dev-cw.dev-franceconnect.fr/data/callback",
     "scopes": ["dgfip_revenu_fiscal_de_reference", "cpam_attestation_droit", "edf_adresse_postale"]
   },
-  "quotientFamilialURL": "https://fdp.integ01.dev-franceconnect.fr/quotientFamilial"
+
+  "mode": "agents"
 }

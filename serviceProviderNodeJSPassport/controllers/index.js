@@ -1,10 +1,12 @@
 'use strict;'
 
-var IndexController = function(){};
-var configManager = new (require('../helpers/configManager.js'))();
+// var IndexController = function(){};
+// var configManager = new (require('../helpers/configManager.js'))();
+const config = require('../config/config.json')
 
-IndexController.prototype.handleMain = function(req, res){
-    var agentMode = configManager.isModeAgents();
+const handleMain = (req, res) => {
+    // var agentMode = configManager.isModeAgents();
+    const agentMode = config.mode === 'agents'
     if(req.session.user){
         res.render('index', {title: 'Démonstrateur France Connect - Accueil', user: req.session.user, userInfo: req.session.userInfo, agentMode: agentMode});
     } else {
@@ -18,6 +20,8 @@ IndexController.prototype.handleMain = function(req, res){
             res.render('index', {title: 'Démonstrateur France Connect - Accueil', user: undefined, userInfo: undefined, agentMode: agentMode});
         }
     }
-};
+}
 
-module.exports.IndexController = IndexController;
+module.exports = {
+  handleMain
+};

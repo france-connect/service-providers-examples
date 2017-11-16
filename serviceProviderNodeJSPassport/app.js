@@ -1,22 +1,28 @@
-'use strict'
+var debug = require('debug')('serviceProvider1');
 
-// if(!process.env.NODE_ENV){
-//     process.env.NODE_ENV = 'development';
-// }
+if(!process.env.NODE_ENV){
+    process.env.NODE_ENV = 'development';
+}
+// var config = (new (require('./helpers/configManager.js'))())._rawConfig;
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
+// var OpenIdConnectStrategy = require('passport-openidconnect').Strategy;
+// var passportAuthenticateWithAcrClaims = require('./helpers/passportAuthenticateWithCustomClaims').PassportAuthenticateWithCustomClaims;
 
-const debug = require('debug')('serviceProvider1');
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const passport = require('passport');
-const openIdConnectStrategy = require('passport-openidconnect').Strategy;
-const passportAuthenticateWithAcrClaims = require('./helpers/passportAuthenticateWithCustomClaims').PassportAuthenticateWithCustomClaims;
-const initExpress = require('./initExpress').initExpress;
+var indexRoutes = require('./routes/index');
+var dataRoutes = require('./routes/data');
+
+const config = require('./config/config.json');
+const initExpressApp = require('./initExpress').initExpressApp;
+const errorHandlerDev = require('./utilsExpress').errorHandlerDev;
 
 const app = express();
+const router = express.Router()
 
 const middleWares = [
       logger('dev'),
@@ -33,13 +39,14 @@ const middleWares = [
       passport.initialize(),
       passport.session(),
 ];
-// 'openidconnect'
 
-initExpress(app, middleWares)
+initExpressApp(app, router, middleWares, passport, config)
+errorHandlerDev(app)
 
-const server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
-});
+app.listen(process.env.PORT || 3001)
+console.log('App listening on :', process.env.PORT || 3001);
+// var server = app.listen(app.get('port'), function() {
+//   debug('Express server listening on port ' + server.address().port);
+// });
 
-console.log('gogo');
 module.exports = app;

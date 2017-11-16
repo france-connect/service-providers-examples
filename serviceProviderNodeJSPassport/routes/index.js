@@ -1,25 +1,35 @@
+// var passport = require('passport');
 var express = require('express');
-var passport = require('passport');
 var router = express.Router();
-var config = (new (require('../helpers/configManager.js'))())._rawConfig;
-var url = require('url');
+// var config = (new (require('../helpers/configManager.js'))())._rawConfig;
+// var url = require('url');
 var jwt = require('jwt-simple');
 var crypto = require('crypto');
-var indexController = new (require('../controllers/index.js').IndexController)();
+// var indexController = new (require('../controllers/index.js').IndexController)();
+const handleMain = require('../controllers/index').handleMain
 
-function checkStateParams(req, res, next) {
-    if (req.query && req.query.state && !req.query.error && req.session.state !== req.query.state) {
-        return res.status(401).send({error: {'name': 'invalid_state', 'message': 'invalid state'}});
-    } else {
-        next();
-    }
+const checkStateParams = (req, res, next) => {
+  if (req.query && req.query.state && !req.query.error && req.session.state !== req.query.state) {
+    return res.status(401).send({error: {'name': 'invalid_state', 'message': 'invalid state'}});
+  } else {
+    next();
+  }
 }
 
-router.get('/', checkStateParams,indexController.handleMain);
+const initRouter = (router, passport, config) => {
 
-router.get('/login_org', passport.authenticate('openidconnect'), function (req, res) {
-  console.log('pouet');
-});
+router.get('/', checkStateParams, handleMain);
+router.get(
+  '/login_org',
+  (req, res, next) => {
+    console.log('pouet pouet')
+    next()
+  },
+  passport.authenticate(
+    'openidconnect',
+    (err, user) => console.log(err, user)
+  )
+)
 
 router.get('/oidc_callback', checkStateParams, function (req, res, next) {
     passport.authenticate('openidconnect', function (err, user) {
@@ -97,4 +107,7 @@ router.get('/debug', function (req, res) {
     res.render('debug', {headers: req.headers, session: req.session, idToken: idToken, sub: sub});
 });
 
-module.exports = router;
+return router
+}
+
+module.exports = initRouter;
