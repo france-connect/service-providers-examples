@@ -27,7 +27,7 @@ router.get(
   },
   passport.authenticate(
     'openidconnect',
-    (err, user) => console.log(err, user)
+    (err, user) => res.end(err, user)
   )
 )
 
