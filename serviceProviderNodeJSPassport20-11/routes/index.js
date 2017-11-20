@@ -12,25 +12,27 @@ const makeAuthRoute = require('../utilsExpress').makeAuthRoute
 const requestToken = require('../utilsExpress').requestToken
 
 
-const initRouter = (router, passport, params) => {
+const initRouter = (router, passport, config) => {
   router.get('/', handleMain)
 
   // router.get('/login_org', (req, res) => res.send(params))
 
   router.get('/login_org',
   (req, res) => {
-    console.log('yoloooooooo', params);
-    res.redirect(makeAuthRoute(params))
+    console.log('yoloooooooo', makeAuthRoute(config.fcURL, config.openIdConnectStrategyParameters));
+    res.redirect(makeAuthRoute(config.fcURL, config.openIdConnectStrategyParameters))
   })
 
   router.get('/callback', (req, res) => {
     // Check state
-    console.log('callbackulu');
-    if (req.query.state !== 'myTestService') {
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+    console.log(req.query);
+    console.log(req.session);
+    if (req.query.state !== config.openIdConnectStrategyParameters.state) {
       console.log('[Wrong state]')
       res.sendStatus(403)
     } else {
-      requestToken(params, req.query.code, customAxios)
+      requestToken(config.fcURL, config.openIdConnectStrategyParameters, req.query.code)
       .then((response) => {
         let decodedInfos = jwt.decode(response.data.id_token)
 

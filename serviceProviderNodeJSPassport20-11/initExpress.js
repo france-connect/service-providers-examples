@@ -6,7 +6,7 @@ const initMiddleWares = require('./utilsExpress').initMiddleWares;
 const initRouter = require('./routes/index');
 const dataRoutes = require('./routes/data');
 
-const initExpressApp = (app, router, middleWares, passport, config) => {
+const initExpressApp = (app, router, middleWares, passport, config, customAxios) => {
    initMiddleWares(app, 'use', middleWares);
    app.set('views', path.join(__dirname, 'views'));
    app.set('view engine', 'ejs');
@@ -16,7 +16,7 @@ const initExpressApp = (app, router, middleWares, passport, config) => {
    passport.serializeUser((user, done) => done(null, user));
    passport.deserializeUser((obj, done) => done(null, obj));
 
-   app.use('/', initRouter(router, passport, config.openIdConnectStrategyParameters));
+   app.use('/', initRouter(router, passport, config, customAxios));
    // app.use('/data', dataRoutes);
    app.locals.FCUrl = config.fcURL;
 }

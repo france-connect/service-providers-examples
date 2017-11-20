@@ -40,8 +40,8 @@ const middleWares = [
 initExpressApp(app, router, middleWares, passport, config)
 // errorHandlerDev(app)
 
-app.listen(process.env.PORT || 3001)
-console.log('App listening on :', process.env.PORT || 3001);
+app.listen(process.env.PORT || 8000)
+console.log('App listening on :', process.env.PORT || 8000);
 // var server = app.listen(app.get('port'), function() {
 //   debug('Express server listening on port ' + server.address().port);
 // });

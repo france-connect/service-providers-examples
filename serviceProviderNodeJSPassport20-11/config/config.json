@@ -1,16 +1,16 @@
 {
   "env": "development",
-  "fcURL": "https://fca.dev-cw.dev-franceconnect.fr/",
+  "fcURL": "https://fca.dev-cw.dev-franceconnect.fr",
   "openIdConnectStrategyParameters": {
     "clientID": "e42ffd71289e26b1c45c8f03fd5a6b591dcf9e0c371b602673b4671ec289efbe",
     "clientSecret": "aa1e9e6096542939749f65476b7b274ae065d5646babd60c752564d3200d8a38",
-    "callbackURL": "https://localhost:8000/callback",
+    "callbackURL": "http://localhost:8000/callback",
     "authorizationURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/authorize",
     "tokenURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/token",
     "userInfoURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/userinfo",
     "logoutURL":"https://fca.dev-cw.dev-franceconnect.fr/api/v1/logout",
     "acr_values":"eidas2 siren elu",
-    "scope": ["openid", "email", "address", "phone"],
+    "scope": "openid email phone",
     "state": "state",
     "nonce": "nonce"
   },
