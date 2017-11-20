@@ -1,10 +1,11 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var passport = require('passport');
-var indexRoutes = require('./routes/index');
+'use strict'
 
+const express = require('express');
+const path = require('path');
+// const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
+const indexRoutes = require('./routes/index');
 const config = require('./config/config.json');
 const initExpressApp = require('./initExpress').initExpressApp;
 

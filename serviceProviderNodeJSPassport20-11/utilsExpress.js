@@ -1,4 +1,5 @@
 'use strict'
+
 const axios = require('axios')
 const https = require('https')
 
@@ -8,15 +9,7 @@ const customAxios = axios.create({
   })
 })
 
-/**
-*   call obj[method] on each element in array
-*  @param {Object} obj
-*  @param {String} method
-*  @param {Array} arr
-*/
-
 const callObjMethodOnArray = (obj, method, arr) => arr.forEach(el => obj[method](el));
-
 
 const initMiddleWares = (app, method, arr) => {
   return method === 'use' || method === 'get' || method === 'set'
