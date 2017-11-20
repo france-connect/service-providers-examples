@@ -1,46 +1,39 @@
 'use strict'
 
-
-// router.get('/login_org', passport.authenticate('fcOIDC'))
-
-// router.get('/', (req, res) => {
-//   res.render('index.html')
-// })
-
 const handleMain = require('../controllers/index').handleMain
 const makeAuthRoute = require('../utilsExpress').makeAuthRoute
 const requestToken = require('../utilsExpress').requestToken
+const getUserInfo = require('../utilsExpress').getUserInfo
 const jwt = require('jsonwebtoken')
 
 const initRouter = (router, passport, config) => {
   router.get('/', handleMain)
 
-  // router.get('/login_org', (req, res) => res.send(params))
-
   router.get('/login_org',
   (req, res) => {
-    console.log('yoloooooooo', makeAuthRoute(config.fcURL, config.openIdConnectStrategyParameters));
     res.redirect(makeAuthRoute(config.fcURL, config.openIdConnectStrategyParameters))
   })
 
   router.get('/oidc_callback', (req, res) => {
     // Check state
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-    console.log(req.query);
     if (req.query.state !== config.openIdConnectStrategyParameters.state) {
       console.log('[Wrong state]')
       res.sendStatus(403)
     } else {
       requestToken(config.fcURL, config.openIdConnectStrategyParameters, req.query.code)
-      .then((response) => {
-        let decodedInfos = jwt.decode(response.data.id_token)
+      .then((tokenResponse) => {
+        const decodedInfos = jwt.decode(tokenResponse.data.id_token)
 
-        console.log('[Whole response] : ', response.data);
+        console.log('[Whole tokenResponse] : ', tokenResponse.data);
         console.log('[Decoded infos]', decodedInfos)
-        res.send(decodedInfos)
+        getUserInfo(config.fcURL, tokenResponse.data.access_token)
+        .then((infosResponse) => {
+          res.send(infosResponse.data)
+        })
+        .catch((err) => { console.log(err)})
+
       })
       .catch(response => {
-        console.log(response);
         res.send(response)
       })
     }

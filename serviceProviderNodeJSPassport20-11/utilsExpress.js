@@ -23,22 +23,12 @@ const initMiddleWares = (app, method, arr) =>
   : console.og('Wrong method name : ', method)
 
 const makeAuthRoute = (url, params) => {
-
-  console.log('test makeAuthRoute');
-  console.log(`${url}/api/v1/authorize?response_type=code`
-  + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
-  + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`);
-
   return `${url}/api/v1/authorize?response_type=code`
   + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
   + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
 }
 
 const requestToken = (url, params, code) => {
-  // console.log('test requestToken');
-  // console.log('>>>>>>>>>>>><');
-  console.log(url, params);
-  console.log('CODE', code);
   return customAxios.post(`${url}/api/v1/token`, {
     redirect_uri: params.callbackURL,
     client_id: params.clientID,
@@ -48,6 +38,10 @@ const requestToken = (url, params, code) => {
   })
 }
 
+const getUserInfo = (url, access_token) => {
+  return customAxios.get(`${url}/api/v1/userinfo?schema=openid`,
+    { headers: { Authorization: `Bearer ${access_token}`}})
+}
 
 //  error handler
 // will print stacktrace for dev not for pro
@@ -81,5 +75,6 @@ module.exports = {
   initMiddleWares,
   errorHandlerDev,
   makeAuthRoute,
-  requestToken
+  requestToken,
+  getUserInfo
 }
