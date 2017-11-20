@@ -1,0 +1,38 @@
+<% include includes/header.ejs %>
+<div class="row-fluid">
+    <% include includes/voirie-panel.ejs %>
+    <div class="span6">
+        <div class="alert alert-info">
+            <h4>Le montant de chaque repas sera de : <span class="pull-right">3.64 euros</span></h4>
+        </div>
+        <h4>Vos informations</h4>
+        <hr/>
+        <table class="table table-bordered table-striped">
+            <tr>
+                <td>Motif de la demande</td>
+                <td>Inscription pour la cantine période: <b>2015-2016</b></td>
+            </tr>
+            <tr>
+                <td>Vous êtes</td>
+                <td><b><%= user %></b></td>
+            </tr>
+            <tr>
+                <td>Votre adresse</td>
+                <td><b>34 avenue de l'Opéra, 75002 Paris</b></td>
+            </tr>
+            <tr>
+                <td>Votre enfant</td>
+                <td><b><%= informationsCantine.prenomEnfant + ' ' + informationsCantine.nomEnfant %></b></td>
+            </tr>
+            <tr>
+                <td>Montant de la base fiscale utilisé</td>
+                <td><b><%= data %> &euro;</b></td>
+            </tr>
+        </table>
+        <p class="text-center">
+            <a class="btn btn-large">Annuler</a>
+            <a href="/data/fin-demarche" class="btn btn-large btn-primary">Confirmer l'inscription</a>
+        </p>
+    </div>
+</div>
+<% include includes/footer %>
