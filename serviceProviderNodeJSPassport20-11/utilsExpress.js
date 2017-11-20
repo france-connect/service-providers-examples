@@ -25,8 +25,10 @@ const initMiddleWares = (app, method, arr) =>
 const makeAuthRoute = (url, params) => {
 
   console.log('test makeAuthRoute');
-  console.log(params.state);
-  console.log(params.nonce);
+  console.log(`${url}/api/v1/authorize?response_type=code`
+  + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
+  + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`);
+
   return `${url}/api/v1/authorize?response_type=code`
   + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
   + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
@@ -35,24 +37,15 @@ const makeAuthRoute = (url, params) => {
 const requestToken = (url, params, code) => {
   // console.log('test requestToken');
   // console.log('>>>>>>>>>>>><');
-  // console.log(url, params);
-  // console.log('CODE', code);
-  return axios.post(`${url}/api/v1/token`, {
+  console.log(url, params);
+  console.log('CODE', code);
+  return customAxios.post(`${url}/api/v1/token`, {
     redirect_uri: params.callbackURL,
     client_id: params.clientID,
     client_secret: params.clientSecret,
     grant_type: 'authorization_code',
     code: code
   })
-
-
-  return axios.post(`${config.url}/api/v1/token`, {
-  redirect_uri: config.redirect_uri,
-  client_id: config.id,
-  client_secret: config.secret,
-  grant_type: 'authorization_code',
-  code: code
-})
 }
 
 

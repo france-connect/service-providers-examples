@@ -10,7 +10,7 @@
 const handleMain = require('../controllers/index').handleMain
 const makeAuthRoute = require('../utilsExpress').makeAuthRoute
 const requestToken = require('../utilsExpress').requestToken
-
+const jwt = require('jsonwebtoken')
 
 const initRouter = (router, passport, config) => {
   router.get('/', handleMain)
@@ -23,11 +23,10 @@ const initRouter = (router, passport, config) => {
     res.redirect(makeAuthRoute(config.fcURL, config.openIdConnectStrategyParameters))
   })
 
-  router.get('/callback', (req, res) => {
+  router.get('/oidc_callback', (req, res) => {
     // Check state
     console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<');
     console.log(req.query);
-    console.log(req.session);
     if (req.query.state !== config.openIdConnectStrategyParameters.state) {
       console.log('[Wrong state]')
       res.sendStatus(403)
@@ -41,6 +40,7 @@ const initRouter = (router, passport, config) => {
         res.send(decodedInfos)
       })
       .catch(response => {
+        console.log(response);
         res.send(response)
       })
     }
