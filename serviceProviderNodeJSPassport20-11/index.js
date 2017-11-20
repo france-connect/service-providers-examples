@@ -26,7 +26,4 @@ const middleWares = [
 
 initExpressApp(app, router, middleWares, passport, config);
 
-app.listen(process.env.PORT || 8000);
-console.log('App listening on :', process.env.PORT || 8000);
-
 module.exports = app;

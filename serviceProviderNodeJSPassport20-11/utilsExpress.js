@@ -23,6 +23,13 @@ const makeAuthRoute = (url, params) => {
   + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
 };
 
+/**
+ * post request on /api/v1/token with customAxios for self signed error
+ * @param  {String} url    [description]
+ * @param  {Object} params [description]
+ * @param  {String} code   [code retrieved with authorize]
+ * @return {Promise}        [description]
+ */
 const requestToken = (url, params, code) => {
   return customAxios.post(`${url}/api/v1/token`, {
     redirect_uri: params.callbackURL,
@@ -33,6 +40,12 @@ const requestToken = (url, params, code) => {
   })
 };
 
+/**
+ * get request on /api/v1/userinfo with customAxios for self signed error
+ * @param  {String} url          [description]
+ * @param  {String} access_token [description]
+ * @return {Promise}              [description]
+ */
 const getUserInfo = (url, access_token) => {
   return customAxios.get(`${url}/api/v1/userinfo?schema=openid`,
     { headers: { Authorization: `Bearer ${access_token}`}})
