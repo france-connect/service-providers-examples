@@ -7,33 +7,30 @@ const getUserInfo = require('../utilsExpress').getUserInfo
 const jwt = require('jsonwebtoken')
 
 const initRouter = (router, passport, config) => {
-  router.get('/', handleMain)
+  router.get('/', (req, res) => {
+    res.render('index', { title: 'Démonstrateur France Connect - Accueil' })
+  })
 
-  router.get('/login_org',
-  (req, res) => {
+  router.get('/login_org', (req, res) => {
     res.redirect(makeAuthRoute(config.fcURL, config.openIdConnectStrategyParameters))
   })
 
   router.get('/oidc_callback', (req, res) => {
-    // Check state
     if (req.query.state !== config.openIdConnectStrategyParameters.state) {
       console.log('[Wrong state]')
       res.sendStatus(403)
     } else {
       requestToken(config.fcURL, config.openIdConnectStrategyParameters, req.query.code)
       .then((tokenResponse) => {
-        const decodedInfos = jwt.decode(tokenResponse.data.id_token)
+        // const decodedInfos = jwt.decode(tokenResponse.data.id_token)
+        // console.log('[Decoded infos]', decodedInfos)
 
-        console.log('[Whole tokenResponse] : ', tokenResponse.data);
-        console.log('[Decoded infos]', decodedInfos)
-        getUserInfo(config.fcURL, tokenResponse.data.access_token)
+        return getUserInfo(config.fcURL, tokenResponse.data.access_token)
         .then((infosResponse) => {
           res.send(infosResponse.data)
         })
-        .catch((err) => { console.log(err)})
-
       })
-      .catch(response => {
+      .catch((response) => {
         res.send(response)
       })
     }
