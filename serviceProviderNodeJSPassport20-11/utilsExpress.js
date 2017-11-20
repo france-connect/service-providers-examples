@@ -15,19 +15,20 @@ const customAxios = axios.create({
 *  @param {Array} arr
 */
 
-const callObjMethodOnArray = (obj, method, arr) => arr.forEach(el => obj[method](el))
+const callObjMethodOnArray = (obj, method, arr) => arr.forEach(el => obj[method](el));
 
 
-const initMiddleWares = (app, method, arr) =>
-  method === 'use' || method === 'get' || method === 'set'
+const initMiddleWares = (app, method, arr) => {
+  return method === 'use' || method === 'get' || method === 'set'
   ? callObjMethodOnArray(app, method, arr)
   : console.og('Wrong method name : ', method)
+};
 
 const makeAuthRoute = (url, params) => {
   return `${url}/api/v1/authorize?response_type=code`
   + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
   + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
-}
+};
 
 const requestToken = (url, params, code) => {
   return customAxios.post(`${url}/api/v1/token`, {
@@ -37,16 +38,15 @@ const requestToken = (url, params, code) => {
     grant_type: 'authorization_code',
     code: code
   })
-}
+};
 
 const getUserInfo = (url, access_token) => {
   return customAxios.get(`${url}/api/v1/userinfo?schema=openid`,
     { headers: { Authorization: `Bearer ${access_token}`}})
-}
+};
 
 module.exports = {
   initMiddleWares,
-  errorHandlerDev,
   makeAuthRoute,
   requestToken,
   getUserInfo
