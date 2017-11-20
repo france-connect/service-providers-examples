@@ -7,7 +7,6 @@ const initRouter = require('./routes/index');
 const dataRoutes = require('./routes/data');
 
 const initExpressApp = (app, router, middleWares, passport, config) => {
-   console.log('pwet pwet', typeof config)
    initMiddleWares(app, 'use', middleWares);
    app.set('views', path.join(__dirname, 'views'));
    app.set('view engine', 'ejs');
@@ -17,8 +16,8 @@ const initExpressApp = (app, router, middleWares, passport, config) => {
    passport.serializeUser((user, done) => done(null, user));
    passport.deserializeUser((obj, done) => done(null, obj));
 
-   app.use('/', initRouter(router, passport, config));
-   app.use('/data', dataRoutes);
+   app.use('/', initRouter(router, passport, config.openIdConnectStrategyParameters));
+   // app.use('/data', dataRoutes);
    app.locals.FCUrl = config.fcURL;
 }
 

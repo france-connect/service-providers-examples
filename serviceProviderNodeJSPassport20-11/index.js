@@ -1,8 +1,5 @@
-var debug = require('debug')('serviceProvider1');
+// var debug = require('debug')('serviceProvider1');
 
-if(!process.env.NODE_ENV){
-    process.env.NODE_ENV = 'development';
-}
 // var config = (new (require('./helpers/configManager.js'))())._rawConfig;
 var express = require('express');
 var path = require('path');
@@ -41,7 +38,7 @@ const middleWares = [
 ];
 
 initExpressApp(app, router, middleWares, passport, config)
-errorHandlerDev(app)
+// errorHandlerDev(app)
 
 app.listen(process.env.PORT || 3001)
 console.log('App listening on :', process.env.PORT || 3001);

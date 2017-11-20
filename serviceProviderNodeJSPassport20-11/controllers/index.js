@@ -1,11 +1,8 @@
 'use strict;'
 
-// var IndexController = function(){};
-// var configManager = new (require('../helpers/configManager.js'))();
 const config = require('../config/config.json')
 
 const handleMain = (req, res) => {
-    // var agentMode = configManager.isModeAgents();
     const agentMode = config.mode === 'agents'
 
     if(req.session.user){
