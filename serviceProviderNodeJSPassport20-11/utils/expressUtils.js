@@ -1,37 +1,41 @@
 'use strict'
 
-const path = require('path');
+const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
 const initRouter = require('./routerUtils').initRouter;
 
-
-const useMiddleWares = (app, arr) => {
-    arr.forEach((middleWare) => {
-      app['use'](middleWare)
-    })
-};
 /**
- *  express app initialize logic, to keep out of index
+ *  express app initialize, keeping logic out of index
  *
  * @param  {Object} app         [description]
  * @param  {Object} router      [description]
  * @param  {Array} middleWares [description]
  * @param  {Object} passport    [description]
  * @param  {Object} config      [description]
- * @param  {Object} customAxios [description]
+ * @param  {Object} customAxios [descript  ion]
  * @return {}             [description]
  */
-const initExpressApp = (app, router, middleWares, passport, config, customAxios, dirname) => {
-   useMiddleWares(app, middleWares);
+const initExpressApp = (app, router, config, customAxios, dirname) => {
+  passport.serializeUser((user, done) => {
+    done(null, user)
+  });
+  passport.deserializeUser((obj, done) => {
+    done(null, obj)
+  });
 
-   app.set('views', path.join(dirname, 'views'));
+   app.use(express.static(__dirname + 'public')));
+   app.use(session({
+      secret: 'Some Secret !!!',
+      key: 'sid',
+      saveUninitialized: true,
+      resave: true,
+    }));
+   app.use(passport.initialize());
+   app.use(passport.session());
+
+   app.set('views', dirname + 'views');
    app.set('view engine', 'ejs');
-
-   passport.serializeUser((user, done) => {
-     done(null, user)
-   });
-   passport.deserializeUser((obj, done) => {
-     done(null, obj)
-   });
 
    app.use('/', initRouter(router, passport, config, customAxios));
    app.locals.FCUrl = config.fcURL;
