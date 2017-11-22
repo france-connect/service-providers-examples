@@ -36,7 +36,6 @@ const initExpressApp = (app, router, config, customAxios, dirname) => {
 
    app.set('views', dirname + '/views');
    app.set('view engine', 'ejs');
-
    app.use('/', initRouter(router, passport, config, customAxios));
    app.locals.FCUrl = config.fcURL;
 }
