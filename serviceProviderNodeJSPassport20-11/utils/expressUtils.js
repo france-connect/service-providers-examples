@@ -24,7 +24,7 @@ const initExpressApp = (app, router, config, customAxios, dirname) => {
     done(null, obj)
   });
 
-   app.use(express.static(__dirname + 'public')));
+   app.use(express.static(dirname + '/public'));
    app.use(session({
       secret: 'Some Secret !!!',
       key: 'sid',
@@ -34,7 +34,7 @@ const initExpressApp = (app, router, config, customAxios, dirname) => {
    app.use(passport.initialize());
    app.use(passport.session());
 
-   app.set('views', dirname + 'views');
+   app.set('views', dirname + '/views');
    app.set('view engine', 'ejs');
 
    app.use('/', initRouter(router, passport, config, customAxios));
