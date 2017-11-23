@@ -9,26 +9,40 @@ const jwt = require('jsonwebtoken');
  * @param  {Object} config
  * @return {}
  */
-const initRouter = (router, passport, config) => {
+const initRouter = (router, passport, config, axios) => {
   router.get('/', (req, res) => {
-    res.render('index', { title: 'Démonstrateur France Connect - Accueil' , user: undefined});
+    res.render('index', { title: 'Démonstrateur France Connect'});
   });
 
   router.get('/login_org', (req, res) => {
-    res.redirect(getAuthRoute(config.fcURL, config.openIdConnectStrategyParameters));
+    res.redirect(getAuthRoute(config.fcURL, config.openIdParameters));
   });
 
   router.get('/oidc_callback', (req, res) => {
-    if (req.query.state !== config.openIdConnectStrategyParameters.state) {
+    if (req.query.state !== config.openIdParameters.state) {
       console.log('[Wrong state]');
       res.sendStatus(403);
     } else {
-      requestTokenWithCode(config.fcURL, config.openIdConnectStrategyParameters, req.query.code)
+      requestTokenWithCode(config.fcURL, config.openIdParameters, req.query.code, axios)
       .then((tokenResponse) => {
-        return requestUserInfoWithAccesToken(config.fcURL, tokenResponse.data.access_token)
+        return requestUserInfoWithAccesToken(config.fcURL, tokenResponse.data.access_token, axios)
         .then((infosResponse) => {
-          console.log('[Success] User Infos : ', JSON.stringify(infosResponse.data));
-          res.send("[Success] User Infos : " + JSON.stringify(infosResponse.data));
+          let infosToRender = {};
+
+          infosToRender.title = 'Démonstrateur France Connect';
+          if (infosResponse.data.phone_number) {
+            infosToRender.phone_number = infosResponse.data.phone_number
+          };
+          if (infosResponse.data.email) {
+            infosToRender.email = infosResponse.data.email
+          };
+          console.log('[Success] User Infos : ', infosToRender);
+          // res.render('userInfo', infosToRender);
+          res.render('userInfo', infosToRender);
+
+
+
+          // res.send("[Success] User Infos : " + JSON.stringify(infosResponse.data));
         })
       })
       .catch((response) => {
@@ -36,7 +50,6 @@ const initRouter = (router, passport, config) => {
       })
     }
   })
-
   return router;
 }
 
