@@ -14,7 +14,7 @@ const initRouter = (router, passport, config, axios) => {
     res.render('index', {
       title: 'Démonstrateur France Connect',
       user: undefined
-    });
+      });
   });
 
   router.get('/login_org', (req, res) => {
@@ -32,7 +32,7 @@ const initRouter = (router, passport, config, axios) => {
         .then((infosResponse) => {
           let infosToRender = {};
 
-          infosToRender.user = undefined;
+          infosToRender.user = infosResponse.data.given_name;
           infosToRender.title = 'Démonstrateur France Connect';
           if (infosResponse.data.phone_number) {
             infosToRender.phone_number = infosResponse.data.phone_number
@@ -43,6 +43,8 @@ const initRouter = (router, passport, config, axios) => {
           console.log('[Success] User Infos : ', infosToRender);
           // res.render('userInfo', infosToRender);
           res.render('userInfo', infosToRender);
+
+
 
           // res.send("[Success] User Infos : " + JSON.stringify(infosResponse.data));
         })

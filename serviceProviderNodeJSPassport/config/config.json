@@ -10,18 +10,12 @@
     "userInfoURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/userinfo",
     "logoutURL":"https://fca.dev-cw.dev-franceconnect.fr/api/v1/logout",
     "acr_values":"eidas2 siren elu",
-    "scope": "openid email phone",
-    "state": "state",
-    "nonce": "nonce"
+    "scope": "openid email phone given_name",
+    "state": "myTestServiceState",
+    "nonce": "timestamp123"
   },
   "session": {
     "secure": true
-  },
-  "oauth": {
-    "authorizationURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/authorize",
-    "tokenURL": "https://fca.dev-cw.dev-franceconnect.fr/api/v1/token",
-    "callbackURL": "https://fsa2.dev-cw.dev-franceconnect.fr/data/callback",
-    "scopes": ["dgfip_revenu_fiscal_de_reference", "cpam_attestation_droit", "edf_adresse_postale"]
   },
   "mode": "agents"
 }
