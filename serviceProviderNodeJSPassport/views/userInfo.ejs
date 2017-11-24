@@ -10,13 +10,13 @@
         </ul>
     </div>
     <div class="span6 well">
-        <h4>Gagnez du temps dans la réalisation de vos démarches en vous connectant par FranceConnect!</h4>
-        <p>Connectez vous à l'administration <b>en toute sécurité</b>, <b>sans créer de nouveau compte</b>.</p>
-        <div class="span12 connect">
-            <a id="fc_login" rel="group" href="/login_org">
-                Connexion avec FranceConnect
-            </a>
-        </div>
+      <h4>Mes Infos</h4>
+      <% if(email){ %>
+        mon email: <%= email %>
+      <% } %>
+      <% if(phone_number){ %>
+        mon téléphone: <%= phone_number %>
+      <% } %>
     </div>
 </div>
 <script>
