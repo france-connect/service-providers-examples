@@ -3,12 +3,12 @@
 const express = require('express');
 
 /**
- * separating router logic
- * @param  {Object} router
- * @param  {Object} config
- * @param  {Object} axios
- * @return {}
- */
+* separating router logic
+* @param  {Object} router
+* @param  {Object} config
+* @param  {Object} axios
+* @return {}
+*/
 
 const initRouter = (config, axios) => {
   const router = express.Router()
@@ -17,7 +17,7 @@ const initRouter = (config, axios) => {
     res.render('index', {
       title: 'Démonstrateur France Connect',
       user: undefined
-      });
+    });
   });
 
   router.get('/login_org', (req, res) => {
@@ -33,66 +33,68 @@ const initRouter = (config, axios) => {
       .then((tokenRes) => {
         return requestUserInfoWithAccesToken(config.openIdParameters,
           tokenRes.data.access_token, axios).then((infosRes) => {
-          let toRender = {};
+            let toRender = {};
 
-          toRender.user = infosRes.data.given_name;
-          toRender.title = 'Démonstrateur France Connect';
-          if (infosRes.data.phone_number) {
-            toRender.phone_number = infosRes.data.phone_number
-          };
-          if (infosRes.data.email) {
-            toRender.email = infosRes.data.email
-          };
-          console.log('[Success] User Infos : ', toRender);
+            toRender.user = infosRes.data.given_name;
+            toRender.title = 'Démonstrateur France Connect';
+            if (infosRes.data.phone_number) {
+              toRender.phone_number = infosRes.data.phone_number
+            };
+            if (infosRes.data.email) {
+              toRender.email = infosRes.data.email
+            };
+            console.log('[Success] User Infos : ', toRender);
 
-          res.render('userInfo', toRender);
+            res.render('userInfo', toRender);
+          })
         })
-      })
-      .catch((response) => {
-        res.send(response);
-      })
-    }
-  })
-  return router;
-}
+        .catch((response) => {
+          res.send(response);
+        })
+      }
+    })
+    return router;
+  }
 
 
-const getAuthRoute = (params) => {
-  return `${params.authorizationURL}?response_type=code`
-  + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
-  + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
-};
+  const getAuthRoute = (params) => {
+    return `${params.authorizationURL}?response_type=code`
+    + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
+    + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
+  };
 
-/**
- * request on token url with customAxios to prevent self signed error
- * @param  {String} url
- * @param  {Object} params
- * @param  {String} code   [code retrieved with authorize]
- * @param  {Object} customAxios
- * @return {Promise}
- */
-const requestTokenWithCode = (params, code, customAxios) => {
-  return customAxios.post(`${params.tokenURL}`, {
-    redirect_uri: params.callbackURL,
-    client_id: params.clientID,
-    client_secret: params.clientSecret,
-    grant_type: 'authorization_code',
-    code: code
-  })
-};
+  /**
+  * request on token url with customAxios to prevent self signed error
+  * @param  {String} url
+  * @param  {Object} params
+  * @param  {String} code   [code retrieved with authorize]
+  * @param  {Object} customAxios
+  * @return {Promise}
+  */
 
-/**
- * get userInfo with customAxios to prevent self signed error
- * @param  {String} url
- * @param  {String} access_token
- * @param  {Object} customAxios
- * @return {Promise}
- */
-const requestUserInfoWithAccesToken = (params, access_token, customAxios) => {
-  return customAxios.get(`${params.userInfoURL}?schema=openid`,
-    { headers: { Authorization: `Bearer ${access_token}`}})
-};
+  const requestTokenWithCode = (params, code, customAxios) => {
+    return customAxios.post(`${params.tokenURL}`, {
+      redirect_uri: params.callbackURL,
+      client_id: params.clientID,
+      client_secret: params.clientSecret,
+      grant_type: 'authorization_code',
+      code: code
+    })
+  };
 
-module.exports = {
-  initRouter
-};
+  /**
+  * get userInfo with customAxios to prevent self signed error
+  * @param  {String} url
+  * @param  {String} access_token
+  * @param  {Object} customAxios
+  * @return {Promise}
+  */
+
+  const requestUserInfoWithAccesToken = (params, access_token, customAxios) => {
+    return customAxios.get(`${params.userInfoURL}?schema=openid`,
+      { headers: { Authorization: `Bearer ${access_token}`}})
+    };
+
+    module.exports = {
+      initRouter
+    };

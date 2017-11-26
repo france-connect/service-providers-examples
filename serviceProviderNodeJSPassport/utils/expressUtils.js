@@ -1,7 +1,7 @@
 'use strict';
 
-const initRouter = require('./routerUtils').initRouter;
 const express = require('express');
+const initRouter = require('./routerUtils').initRouter;
 
 /**
  *  initialize app middlewares, keeping logic out of index
