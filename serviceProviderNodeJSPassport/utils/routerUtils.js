@@ -1,15 +1,18 @@
-'use strict'
+'use strict';
 
 const jwt = require('jsonwebtoken');
-
+const express = require('express')
 /**
  * separating router logic
  * @param  {Object} router
- * @param  {Object} passport
  * @param  {Object} config
+ * @param  {Object} axios
  * @return {}
  */
-const initRouter = (router, passport, config, axios) => {
+
+const initRouter = (config, axios) => {
+  const router = express.Router()
+
   router.get('/', (req, res) => {
     res.render('index', {
       title: 'Démonstrateur France Connect',
@@ -18,7 +21,7 @@ const initRouter = (router, passport, config, axios) => {
   });
 
   router.get('/login_org', (req, res) => {
-    res.redirect(getAuthRoute(config.fcURL, config.openIdParameters));
+    res.redirect(getAuthRoute(config.openIdParameters));
   });
 
   router.get('/oidc_callback', (req, res) => {
@@ -26,27 +29,23 @@ const initRouter = (router, passport, config, axios) => {
       console.log('[Wrong state]');
       res.sendStatus(403);
     } else {
-      requestTokenWithCode(config.fcURL, config.openIdParameters, req.query.code, axios)
-      .then((tokenResponse) => {
-        return requestUserInfoWithAccesToken(config.fcURL, tokenResponse.data.access_token, axios)
-        .then((infosResponse) => {
-          let infosToRender = {};
+      requestTokenWithCode(config.openIdParameters, req.query.code, axios)
+      .then((tokenRes) => {
+        return requestUserInfoWithAccesToken(config.openIdParameters,
+          tokenRes.data.access_token, axios).then((infosRes) => {
+          let toRender = {};
 
-          infosToRender.user = infosResponse.data.given_name;
-          infosToRender.title = 'Démonstrateur France Connect';
-          if (infosResponse.data.phone_number) {
-            infosToRender.phone_number = infosResponse.data.phone_number
+          toRender.user = infosRes.data.given_name;
+          toRender.title = 'Démonstrateur France Connect';
+          if (infosRes.data.phone_number) {
+            toRender.phone_number = infosRes.data.phone_number
           };
-          if (infosResponse.data.email) {
-            infosToRender.email = infosResponse.data.email
+          if (infosRes.data.email) {
+            toRender.email = infosRes.data.email
           };
-          console.log('[Success] User Infos : ', infosToRender);
-          // res.render('userInfo', infosToRender);
-          res.render('userInfo', infosToRender);
+          console.log('[Success] User Infos : ', toRender);
 
-
-
-          // res.send("[Success] User Infos : " + JSON.stringify(infosResponse.data));
+          res.render('userInfo', toRender);
         })
       })
       .catch((response) => {
@@ -58,22 +57,22 @@ const initRouter = (router, passport, config, axios) => {
 }
 
 
-const getAuthRoute = (url, params) => {
-  return `${url}/api/v1/authorize?response_type=code`
+const getAuthRoute = (params) => {
+  return `${params.authorizationURL}?response_type=code`
   + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
   + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
 };
 
 /**
- * post request on /api/v1/token with customAxios to prevent self signed error
+ * request on token url with customAxios to prevent self signed error
  * @param  {String} url
  * @param  {Object} params
  * @param  {String} code   [code retrieved with authorize]
  * @param  {Object} customAxios
  * @return {Promise}
  */
-const requestTokenWithCode = (url, params, code, customAxios) => {
-  return customAxios.post(`${url}/api/v1/token`, {
+const requestTokenWithCode = (params, code, customAxios) => {
+  return customAxios.post(`${params.tokenURL}`, {
     redirect_uri: params.callbackURL,
     client_id: params.clientID,
     client_secret: params.clientSecret,
@@ -89,8 +88,8 @@ const requestTokenWithCode = (url, params, code, customAxios) => {
  * @param  {Object} customAxios
  * @return {Promise}
  */
-const requestUserInfoWithAccesToken = (url, access_token, customAxios) => {
-  return customAxios.get(`${url}/api/v1/userinfo?schema=openid`,
+const requestUserInfoWithAccesToken = (params, access_token, customAxios) => {
+  return customAxios.get(`${params.userInfoURL}?schema=openid`,
     { headers: { Authorization: `Bearer ${access_token}`}})
 };
 

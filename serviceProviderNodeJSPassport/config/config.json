@@ -1,5 +1,4 @@
 {
-  "env": "development",
   "fcURL": "https://fca.dev-cw.dev-franceconnect.fr",
   "openIdParameters": {
     "clientID": "e42ffd71289e26b1c45c8f03fd5a6b591dcf9e0c371b602673b4671ec289efbe",
@@ -13,9 +12,5 @@
     "scope": "openid email phone given_name",
     "state": "myTestServiceState",
     "nonce": "timestamp123"
-  },
-  "session": {
-    "secure": true
-  },
-  "mode": "agents"
+  }
 }
