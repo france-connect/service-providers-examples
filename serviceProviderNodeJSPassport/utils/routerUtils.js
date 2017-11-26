@@ -1,7 +1,7 @@
 'use strict';
 
-const jwt = require('jsonwebtoken');
-const express = require('express')
+const express = require('express');
+
 /**
  * separating router logic
  * @param  {Object} router

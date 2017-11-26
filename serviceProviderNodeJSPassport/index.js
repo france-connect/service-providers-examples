@@ -7,14 +7,12 @@ const config = require('./config/config.json');
 const initExpressApp = require('./utils/expressUtils').initExpressApp;
 
 const app = express();
-
 const customAxios = axios.create({
   httpsAgent: new https.Agent({
     rejectUnauthorized: false
   })
 })
 
-//Using initExpressApp to keep logic out of index ( only requires, initialize and start )
 initExpressApp(app, config, customAxios, __dirname);
 app.listen(process.env.PORT || 8000);
 console.log('App listening on :', process.env.PORT || 8000);
