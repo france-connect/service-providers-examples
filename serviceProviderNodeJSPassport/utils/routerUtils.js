@@ -31,22 +31,22 @@ const initRouter = (config, axios) => {
     } else {
       requestTokenWithCode(config.openIdParameters, req.query.code, axios)
       .then((tokenRes) => {
-        return requestUserInfoWithAccesToken(config.openIdParameters, tokenRes.data.access_token, axios)
+        return requestUserInfoWithAccessToken(config.openIdParameters, tokenRes.data.access_token, axios)
         })
-        .then((infosRes) => {
-          console.log('[Success] User Infos : ', getRenderObj(infosRes));
-          res.render('userInfo', getRenderObj(infosRes));
-        })
-        .catch((response) => {
-          console.log('Caught Exception of type : ', Object.keys(response.response.data));
-          console.log(response.response.data);
-          res.send(response);
-        })
-      }
-    })
+      .then((infosRes) => {
+        res.render('userInfo', getRenderObj(infosRes));
+      })
+      .catch((err) => {
+        if (err.code || err.response.data.message) {
+          res.send('Error code : ' + err.code + ', Error message : ' + err.response.data.message);
+        }
+        console.log(err);
+        res.send('Error')
+      })
+    }
+  })
     return router;
   }
-
 
   const getRenderObj = (infosRes) => {
     let toRender = {};
@@ -78,21 +78,14 @@ const initRouter = (config, axios) => {
   */
 
   const requestTokenWithCode = (params, code, customAxios) => {
-    return customAxios.post(`${params.tokenURL}BUG`, {
+    return customAxios.post(`${params.tokenURL}`, {
       redirect_uri: params.callbackURL,
       client_id: params.clientID,
       client_secret: params.clientSecret,
       grant_type: 'authorization_code',
       code: code
     })
-    .catch((err) => {
-      console.log('pou');
-      Promise.reject({
-      type: 'requestTokenWithCode',
-      err: err
-    })
-  })
-  };
+};
 
   /**
   * get userInfo with customAxios to prevent self signed error
@@ -102,9 +95,9 @@ const initRouter = (config, axios) => {
   * @return {Promise}
   */
 
-  const requestUserInfoWithAccesToken = (params, access_token, customAxios) => {
+  const requestUserInfoWithAccessToken = (params, access_token, customAxios) => {
     return customAxios.get(`${params.userInfoURL}?schema=openid`,
-      { headers: { Authorization: `Bearer ${access_token}`}})
+      { headers: { Authorization: `BUG ${access_token}`}})
     };
 
     module.exports = {
