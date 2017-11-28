@@ -32,6 +32,7 @@ const initRouter = (config, axios) => {
       requestTokenWithCode(config.openIdParameters, req.query.code, axios)
       .then((tokenRes) => {
         return requestUserInfoWithAccessToken(config.openIdParameters, tokenRes.data.access_token, axios)
+        // .catch((err) => Promise.reject({message: err}))
         })
       .then((infosRes) => {
         res.render('userInfo', getRenderObj(infosRes));
@@ -41,7 +42,7 @@ const initRouter = (config, axios) => {
           res.send('Error code : ' + err.code + ', Error message : ' + err.response.data.message);
         }
         console.log(err);
-        res.send('Error')
+        res.send('Error');
       })
     }
   })
