@@ -32,7 +32,6 @@ const initRouter = (config, axios) => {
       requestTokenWithCode(config.openIdParameters, req.query.code, axios)
       .then((tokenRes) => {
         return requestUserInfoWithAccessToken(config.openIdParameters, tokenRes.data.access_token, axios)
-        // .catch((err) => Promise.reject({message: err}))
         })
       .then((infosRes) => {
         res.render('userInfo', getRenderObj(infosRes));
