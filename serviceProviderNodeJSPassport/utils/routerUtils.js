@@ -32,7 +32,7 @@ const initRouter = (config, axios) => {
       requestTokenWithCode(config.openIdParameters, req.query.code, axios)
       .then((tokenRes) => {
         return requestUserInfoWithAccessToken(config.openIdParameters, tokenRes.data.access_token, axios)
-        })
+      })
       .then((infosRes) => {
         res.render('userInfo', getRenderObj(infosRes));
       })
@@ -45,61 +45,61 @@ const initRouter = (config, axios) => {
       })
     }
   })
-    return router;
+  return router;
+}
+
+const getRenderObj = (infosRes) => {
+  let toRender = {};
+
+  toRender.user = infosRes.data.given_name;
+  toRender.title = 'Démonstrateur France Connect';
+  if (infosRes.data.phone_number) {
+    toRender.phone_number = infosRes.data.phone_number;
   }
-
-  const getRenderObj = (infosRes) => {
-    let toRender = {};
-
-    toRender.user = infosRes.data.given_name;
-    toRender.title = 'Démonstrateur France Connect';
-    if (infosRes.data.phone_number) {
-      toRender.phone_number = infosRes.data.phone_number;
-    }
-    if (infosRes.data.email) {
-      toRender.email = infosRes.data.email;
-    }
-    return toRender;
+  if (infosRes.data.email) {
+    toRender.email = infosRes.data.email;
   }
+  return toRender;
+}
 
-  const getAuthRoute = (params) => {
-    return `${params.authorizationURL}?response_type=code`
-    + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
-    + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
-  };
-
-  /**
-  * request on token url with customAxios to prevent self signed error
-  * @param  {String} url
-  * @param  {Object} params
-  * @param  {String} code   [code retrieved with authorize]
-  * @param  {Object} customAxios
-  * @return {Promise}
-  */
-
-  const requestTokenWithCode = (params, code, customAxios) => {
-    return customAxios.post(`${params.tokenURL}`, {
-      redirect_uri: params.callbackURL,
-      client_id: params.clientID,
-      client_secret: params.clientSecret,
-      grant_type: 'authorization_code',
-      code: code
-    })
+const getAuthRoute = (params) => {
+  return `${params.authorizationURL}?response_type=code`
+  + `&client_id=${params.clientID}&redirect_uri=${params.callbackURL}`
+  + `&scope=${encodeURIComponent(params.scope)}&state=${params.state}&nonce=${params.nonce}`
 };
 
-  /**
-  * get userInfo with customAxios to prevent self signed error
-  * @param  {String} url
-  * @param  {String} access_token
-  * @param  {Object} customAxios
-  * @return {Promise}
-  */
+/**
+* request on token url with customAxios to prevent self signed error
+* @param  {String} url
+* @param  {Object} params
+* @param  {String} code   [code retrieved with authorize]
+* @param  {Object} customAxios
+* @return {Promise}
+*/
 
-  const requestUserInfoWithAccessToken = (params, access_token, customAxios) => {
-    return customAxios.get(`${params.userInfoURL}?schema=openid`,
-      { headers: { Authorization: `BUG ${access_token}`}})
-    };
+const requestTokenWithCode = (params, code, customAxios) => {
+  return customAxios.post(`${params.tokenURL}`, {
+    redirect_uri: params.callbackURL,
+    client_id: params.clientID,
+    client_secret: params.clientSecret,
+    grant_type: 'authorization_code',
+    code: code
+  })
+};
 
-    module.exports = {
-      initRouter
-    };
+/**
+* get userInfo with customAxios to prevent self signed error
+* @param  {String} url
+* @param  {String} access_token
+* @param  {Object} customAxios
+* @return {Promise}
+*/
+
+const requestUserInfoWithAccessToken = (params, access_token, customAxios) => {
+  return customAxios.get(`${params.userInfoURL}?schema=openid`,
+    { headers: { Authorization: `BUG ${access_token}`}})
+  };
+
+  module.exports = {
+    initRouter
+  };
