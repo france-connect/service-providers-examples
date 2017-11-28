@@ -47,6 +47,7 @@ const initRouter = (config, axios) => {
     return router;
   }
 
+
   const getRenderObj = (infosRes) => {
     let toRender = {};
 
