@@ -31,24 +31,15 @@ const initRouter = (config, axios) => {
     } else {
       requestTokenWithCode(config.openIdParameters, req.query.code, axios)
       .then((tokenRes) => {
-        return requestUserInfoWithAccesToken(config.openIdParameters,
-          tokenRes.data.access_token, axios).then((infosRes) => {
-            let toRender = {};
-
-            toRender.user = infosRes.data.given_name;
-            toRender.title = 'Démonstrateur France Connect';
-            if (infosRes.data.phone_number) {
-              toRender.phone_number = infosRes.data.phone_number
-            };
-            if (infosRes.data.email) {
-              toRender.email = infosRes.data.email
-            };
-            console.log('[Success] User Infos : ', toRender);
-
-            res.render('userInfo', toRender);
-          })
+        return requestUserInfoWithAccesToken(config.openIdParameters, tokenRes.data.access_token, axios)
+        })
+        .then((infosRes) => {
+          console.log('[Success] User Infos : ', getRenderObj(infosRes));
+          res.render('userInfo', getRenderObj(infosRes));
         })
         .catch((response) => {
+          console.log('Caught Exception of type : ', Object.keys(response.response.data));
+          console.log(response.response.data);
           res.send(response);
         })
       }
@@ -56,6 +47,19 @@ const initRouter = (config, axios) => {
     return router;
   }
 
+  const getRenderObj = (infosRes) => {
+    let toRender = {};
+
+    toRender.user = infosRes.data.given_name;
+    toRender.title = 'Démonstrateur France Connect';
+    if (infosRes.data.phone_number) {
+      toRender.phone_number = infosRes.data.phone_number;
+    }
+    if (infosRes.data.email) {
+      toRender.email = infosRes.data.email;
+    }
+    return toRender;
+  }
 
   const getAuthRoute = (params) => {
     return `${params.authorizationURL}?response_type=code`
@@ -73,13 +77,20 @@ const initRouter = (config, axios) => {
   */
 
   const requestTokenWithCode = (params, code, customAxios) => {
-    return customAxios.post(`${params.tokenURL}`, {
+    return customAxios.post(`${params.tokenURL}BUG`, {
       redirect_uri: params.callbackURL,
       client_id: params.clientID,
       client_secret: params.clientSecret,
       grant_type: 'authorization_code',
       code: code
     })
+    .catch((err) => {
+      console.log('pou');
+      Promise.reject({
+      type: 'requestTokenWithCode',
+      err: err
+    })
+  })
   };
 
   /**

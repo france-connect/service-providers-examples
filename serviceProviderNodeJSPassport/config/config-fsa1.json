@@ -1,0 +1,26 @@
+{
+  "env": "development",
+  "fcURL": "https://fca.vagrant.dev-franceconnect.fr/",
+  "openIdConnectStrategyParameters": {
+    "clientID": "5a643bb4569e324e3814d9d32c4092a4",
+    "clientSecret": "d8844a92d54c7404129e2bb6e33506fa",
+    "callbackURL": "https://fsa1.vagrant.dev-franceconnect.fr/oidc_callback?testkey=testvalue",
+    "authorizationURL": "https://fca.vagrant.dev-franceconnect.fr/api/v1/authorize",
+    "tokenURL": "https://fca.vagrant.dev-franceconnect.fr/api/v1/token",
+    "userInfoURL": "https://fca.vagrant.dev-franceconnect.fr/api/v1/userinfo",
+    "logoutURL":"https://fca.vagrant.dev-franceconnect.fr/api/v1/logout",
+    "acr_values":"eidas2 siren organisation_name NAF_code",
+    "scope": ["profile", "email", "address", "phone", "openid", "preferred_username", "birth"]
+  },
+  "session": {
+    "secure": true
+  },
+  "oauth": {
+    "authorizationURL": "https://fca.vagrant.dev-franceconnect.fr/api/v1/authorize",
+    "tokenURL": "https://fca.vagrant.dev-franceconnect.fr/api/v1/token",
+    "callbackURL": "https://fsa1.vagrant.dev-franceconnect.fr/data/callback",
+    "scopes": ["dgfip_revenu_fiscal_de_reference", "cpam_attestation_droit", "edf_adresse_postale"]
+  },
+  
+  "mode": "agents"
+}

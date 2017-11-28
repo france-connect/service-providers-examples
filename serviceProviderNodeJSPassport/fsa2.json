@@ -1,0 +1,15 @@
+{
+  "name"        : "fsa2",
+  "script"      : "app.js",
+  "log_date_format"  : "YYYY-MM-DD HH:mm:ss.SSSS Z",
+  "watch"       : false,
+  "cwd"         : "/var/www/service-providers-examples/serviceProviderNodeJSPassport",
+  "exec_mode"   : "fork_mode",
+  "instances"   : 1,
+      "node_args"   : "--debug=54031",
+    "env": {
+        "NODE_TLS_REJECT_UNAUTHORIZED" : "0",
+        "NODE_ENV": "development",
+    "PORT": "4031"
+  }
+}
