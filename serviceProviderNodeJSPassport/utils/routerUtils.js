@@ -40,7 +40,7 @@ const initRouter = (config, axios) => {
           res.send('Error code : ' + err.code + ', Error message : ' + err.response.data.message);
         }
         console.log(err);
-        res.send('Error');
+        res.send('Error message in logs');
       })
     }
   })
