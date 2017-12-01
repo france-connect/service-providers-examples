@@ -4,7 +4,6 @@ const express = require('express');
 
 /**
 * separating router logic
-* @param  {Object} router
 * @param  {Object} config
 * @param  {Object} axios
 * @return {}
@@ -70,7 +69,6 @@ const getAuthRoute = (params) => {
 
 /**
 * request on token url with customAxios to prevent self signed error
-* @param  {String} url
 * @param  {Object} params
 * @param  {String} code   [code retrieved with authorize]
 * @param  {Object} customAxios
@@ -89,7 +87,7 @@ const requestTokenWithCode = (params, code, customAxios) => {
 
 /**
 * get userInfo with customAxios to prevent self signed error
-* @param  {String} url
+* @param  {Object} params
 * @param  {String} access_token
 * @param  {Object} customAxios
 * @return {Promise}
