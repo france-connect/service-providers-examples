@@ -14,7 +14,7 @@ const customAxios = axios.create({
 })
 
 initExpressApp(app, config, customAxios, __dirname);
-app.listen(process.env.PORT || 8000);
-console.log('App listening on :', process.env.PORT || 8000);
+app.listen(process.env.PORT || 8001);
+console.log('App listening on :', process.env.PORT || 8001);
 
 module.exports = app;

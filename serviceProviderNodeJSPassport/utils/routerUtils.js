@@ -19,11 +19,14 @@ const initRouter = (config, axios) => {
     });
   });
 
-  router.get('/login_org', (req, res) => {
+// route set up in 'views/index.ejs'
+  router.get('/login', (req, res) => {
     res.redirect(getAuthRoute(config.openIdParameters));
   });
 
   router.get('/oidc_callback', (req, res) => {
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<<');
+    console.log(req);
     if (req.query.state !== config.openIdParameters.state) {
       console.log('[Wrong state]');
       res.sendStatus(403);
