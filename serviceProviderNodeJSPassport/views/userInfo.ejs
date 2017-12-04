@@ -11,11 +11,14 @@
     </div>
     <div class="span6 well">
       <h4>Mes Infos</h4>
-      <% if(email){ %>
-        mon email: <%= email %>
+      <% if(locals.email){ %>
+        <br/> mon email: <%= email %>
       <% } %>
-      <% if(phone_number){ %>
-        mon téléphone: <%= phone_number %>
+      <% if(locals.phone_number){ %>
+        <br/> mon téléphone: <%= phone_number %>
+      <% } %>
+      <% if(locals.given_name){ %>
+        <br/> mon nom: <%= given_name %>
       <% } %>
     </div>
 </div>

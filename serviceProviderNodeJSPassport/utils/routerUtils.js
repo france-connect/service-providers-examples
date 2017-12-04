@@ -24,9 +24,7 @@ const initRouter = (config, axios) => {
     res.redirect(getAuthRoute(config.openIdParameters));
   });
 
-  router.get('/oidc_callback', (req, res) => {
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<<');
-    console.log(req);
+  router.get('/callback', (req, res) => {
     if (req.query.state !== config.openIdParameters.state) {
       console.log('[Wrong state]');
       res.sendStatus(403);
@@ -36,6 +34,7 @@ const initRouter = (config, axios) => {
         return requestUserInfoWithAccessToken(config.openIdParameters, tokenRes.data.access_token, axios)
       })
       .then((infosRes) => {
+        console.log('user infos : ', infosRes.data);
         res.render('userInfo', getRenderObj(infosRes));
       })
       .catch((err) => {
@@ -60,6 +59,9 @@ const getRenderObj = (infosRes) => {
   }
   if (infosRes.data.email) {
     toRender.email = infosRes.data.email;
+  }
+  if (infosRes.data.given_name) {
+    toRender.given_name = infosRes.data.given_name;    
   }
   return toRender;
 }
@@ -98,7 +100,7 @@ const requestTokenWithCode = (params, code, customAxios) => {
 
 const requestUserInfoWithAccessToken = (params, access_token, customAxios) => {
   return customAxios.get(`${params.userInfoURL}?schema=openid`,
-    { headers: { Authorization: `BUG ${access_token}`}})
+    { headers: { Authorization: `Bearer ${access_token}`}})
   };
 
   module.exports = {
