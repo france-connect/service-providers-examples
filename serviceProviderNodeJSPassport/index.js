@@ -3,7 +3,7 @@
 const axios = require('axios')
 const express = require('express');
 const https = require('https');
-const config = require('./config/config.json');
+const config = require('./config/configFCA.json');
 const initExpressApp = require('./utils/expressUtils').initExpressApp;
 
 const app = express();

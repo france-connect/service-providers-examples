@@ -1,0 +1,16 @@
+{
+  "fcURL": "https://fca.int-cw.dev-franceconnect.fr",
+  "openIdParameters": {
+    "clientID": "df4c9ab34b74b44dd0fa2b334fef215966fde718295a95b598893652df810d46",
+    "clientSecret": "cab1d627ef901568362dff58f428b1efb83a0855e3c251d4b3dcf2c5badb1358",
+    "callbackURL": "http://localhost:8000/callback",
+    "authorizationURL": "https://fca.int-cw.dev-franceconnect.fr/api/v1/authorize",
+    "tokenURL": "https://fca.int-cw.dev-franceconnect.fr/api/v1/token",
+    "userInfoURL": "https://fca.int-cw.dev-franceconnect.fr/api/v1/userinfo",
+    "logoutURL":"https://fca.int-cw.dev-franceconnect.fr/api/v1/logout",
+    "acr_values":"eidas2 siren elu",
+    "scope": "openid email phone given_name",
+    "state": "myTestServiceState",
+    "nonce": "timestamp123"
+  }
+}
