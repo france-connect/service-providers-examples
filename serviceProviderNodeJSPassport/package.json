@@ -9,10 +9,5 @@
     "axios": "^0.17.1",
     "ejs": "~0.8.5",
     "express": "~4.9.0"
-  },
-  "devDependencies": {
-    "chai": "^1.10.0",
-    "mocha": "^2.1.0",
-    "sinon": "^1.12.2"
   }
 }

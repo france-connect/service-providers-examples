@@ -1,7 +1,5 @@
 'use strict';
 
-const express = require('express');
-
 /**
 * separating router logic
 * @param  {Object} config
@@ -9,9 +7,10 @@ const express = require('express');
 * @return {}
 */
 
-const initRouter = (config, axios) => {
-  const router = express.Router()
+const processAxiosError = require('./errorUtils').processAxiosError;
+const getErrorFromAxiosRes = require('./errorUtils').getErrorFromAxiosRes;
 
+const initRouter = (router, config, axios) => {
   router.get('/', (req, res) => {
     res.render('index', {
       title: 'Démonstrateur France Connect',
@@ -31,18 +30,14 @@ const initRouter = (config, axios) => {
     } else {
       requestTokenWithCode(config.openIdParameters, req.query.code, axios)
       .then((tokenRes) => {
-        return requestUserInfoWithAccessToken(config.openIdParameters, tokenRes.data.access_token, axios)
+        return requestUserInfoWithAccessToken(config.openIdParameters, tokenRes.data.access_token, axios);
       })
       .then((infosRes) => {
         console.log('user infos : ', infosRes.data);
         res.render('userInfo', getRenderObj(infosRes));
       })
       .catch((err) => {
-        if (err.code || err.response.data.message) {
-          res.send('Error code : ' + err.code + ', Error message : ' + err.response.data.message);
-        }
-        console.log(err);
-        res.send('Error message in logs');
+        res.send(err);
       })
     }
   })
@@ -61,7 +56,7 @@ const getRenderObj = (infosRes) => {
     toRender.email = infosRes.data.email;
   }
   if (infosRes.data.given_name) {
-    toRender.given_name = infosRes.data.given_name;    
+    toRender.given_name = infosRes.data.given_name;
   }
   return toRender;
 }
@@ -76,31 +71,37 @@ const getAuthRoute = (params) => {
 * request on token url with customAxios to prevent self signed error
 * @param  {Object} params
 * @param  {String} code   [code retrieved with authorize]
-* @param  {Object} customAxios
+* @param  {Object} axios
 * @return {Promise}
 */
 
-const requestTokenWithCode = (params, code, customAxios) => {
-  return customAxios.post(`${params.tokenURL}`, {
+const requestTokenWithCode = (params, code, axios) => {
+  return axios.post(`${params.tokenURL}`, {
     redirect_uri: params.callbackURL,
     client_id: params.clientID,
     client_secret: params.clientSecret,
     grant_type: 'authorization_code',
     code: code
   })
+  .catch((err) => {
+    Promise.reject(getErrorFromAxiosRes(err));
+  })
 };
 
 /**
-* get userInfo with customAxios to prevent self signed error
+* get userInfo with axios to prevent self signed error
 * @param  {Object} params
 * @param  {String} access_token
-* @param  {Object} customAxios
+* @param  {Object} axios
 * @return {Promise}
 */
 
-const requestUserInfoWithAccessToken = (params, access_token, customAxios) => {
-  return customAxios.get(`${params.userInfoURL}?schema=openid`,
+const requestUserInfoWithAccessToken = (params, access_token, axios) => {
+  return axios.get(`${params.userInfoURL}?schema=openid`,
     { headers: { Authorization: `Bearer ${access_token}`}})
+    .catch((err) => {
+      Promise.reject(getErrorFromAxiosRes(err));
+    })
   };
 
   module.exports = {

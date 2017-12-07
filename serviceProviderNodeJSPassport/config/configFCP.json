@@ -8,7 +8,6 @@
     "tokenURL": "https://fcp.integ01.dev-franceconnect.fr/api/v1/token",
     "userInfoURL": "https://fcp.integ01.dev-franceconnect.fr/api/v1/userinfo",
     "logoutURL":"https://fcp.integ01.dev-franceconnect.fr/api/v1/logout",
-    "acr_values":"eidas2 siren elu",
     "scope": "openid email phone given_name",
     "state": "myTestServiceState",
     "nonce": "timestamp123"
