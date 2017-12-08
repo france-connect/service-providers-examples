@@ -1,0 +1,27 @@
+<% include ./includes %>
+<div class="container-fluid">
+    <div id="banner">
+        <div class="row-fluid">
+            <div class="span7 offset1">
+                <a href="#">
+                    <img class="logo png_bg" src="/images/Mairie_De_Paris.svg" title="Paris" alt="Paris">
+                </a>
+                <h2 class="title">
+                    <a href="/">GUICHET DES PARISIENS</a>
+                    <% if (user) { %><button id="btn-deconnect" onclick="window.location = '/logout?force'">Se déconnecter sans confirmation</button><%}%>
+                </h2>
+            </div>
+            <div class="span3">
+                <% if (user) { %>
+                <div id="fconnect-profile" data-fc-logout-url="/">
+                    <a href="#"><%= user %></a><span class="caret"></span>
+                </div>
+                <% } %>
+                <div class="logo-demo">DEMO</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <h3 class="page-title span11 offset1"><%= title %></h3>
+    </div>

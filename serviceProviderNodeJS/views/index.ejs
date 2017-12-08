@@ -1,0 +1,28 @@
+<% include includes/header.ejs %>
+<div class="row-fluid">
+    <% include includes/voirie-panel.ejs %>
+    <div class="span6 well">
+        <h4>Avec le Guichet des Parisiens vous pouvez :</h4>
+        <ul class="list-main-content">
+            <li>Accéder aux différentes démarches administratives en ligne de la ville de Paris</li>
+            <li>Retouver l'historique de vos demandes dans votre espace personnel</li>
+            <li>Etre informé de l'état d'avancement de l'instruction de vos demandes</li>
+        </ul>
+    </div>
+    <div class="span6 well">
+        <h4>Gagnez du temps dans la réalisation de vos démarches en vous connectant par FranceConnect!</h4>
+        <p>Connectez vous à l'administration <b>en toute sécurité</b>, <b>sans créer de nouveau compte</b>.</p>
+        <div class="span12 connect">
+            <a id="fc_login" rel="group" href="/login">
+                Connexion avec FranceConnect
+            </a>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
+<% include includes/footer %>
