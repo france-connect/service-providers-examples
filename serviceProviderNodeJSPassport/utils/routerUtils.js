@@ -58,7 +58,6 @@ const getRenderObj = (infosRes) => {
   if (infosRes.data.given_name) toRender.user = infosRes.data.given_name;
   if (infosRes.data.phone_number) toRender.phone_number = infosRes.data.phone_number;
   if (infosRes.data.email) toRender.email = infosRes.data.email;
-  if (infosRes.data.given_name) toRender.given_name = infosRes.data.given_name;
 
   return toRender;
 };
