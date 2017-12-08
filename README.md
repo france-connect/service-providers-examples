@@ -1,6 +1,6 @@
 # Fournisseur de Service
 
-[`doc de référence`](https://fr.wikipedia.org/wiki/Markdown#Liens)
+[`doc de référence`](https://partenaires.franceconnect.gouv.fr/fournisseur-service#glossary)
 
 `Config valide exemple` :
 ```json
