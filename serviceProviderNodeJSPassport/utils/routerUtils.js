@@ -7,8 +7,8 @@
 * @return {}
 */
 
-const processAxiosError = require('./errorUtils').processAxiosError;
 const getErrorFromAxiosRes = require('./errorUtils').getErrorFromAxiosRes;
+const checkErrorInConfig = require('./errorUtils').checkErrorInConfig;
 
 const initRouter = (router, config, axios) => {
   router.get('/', (req, res) => {
@@ -18,9 +18,15 @@ const initRouter = (router, config, axios) => {
     });
   });
 
-// route set up in 'views/index.ejs'
+  // route set up in 'views/index.ejs'
   router.get('/login', (req, res) => {
-    res.redirect(getAuthRoute(config.openIdParameters));
+    let error = checkErrorInConfig(config.openIdParameters)
+
+    if (error) {
+      res.send(`Error in config openIdParameters : ${error}`)
+    } else {
+      res.redirect(getAuthRoute(config.openIdParameters));
+    }
   });
 
   router.get('/callback', (req, res) => {
@@ -37,29 +43,25 @@ const initRouter = (router, config, axios) => {
         res.render('userInfo', getRenderObj(infosRes));
       })
       .catch((err) => {
-        res.send(err);
+        res.send(err.message)
       })
     }
   })
   return router;
-}
+};
 
 const getRenderObj = (infosRes) => {
-  let toRender = {};
+  let toRender = {
+    title: 'Démonstrateur France Connect'
+  };
 
-  toRender.user = infosRes.data.given_name;
-  toRender.title = 'Démonstrateur France Connect';
-  if (infosRes.data.phone_number) {
-    toRender.phone_number = infosRes.data.phone_number;
-  }
-  if (infosRes.data.email) {
-    toRender.email = infosRes.data.email;
-  }
-  if (infosRes.data.given_name) {
-    toRender.given_name = infosRes.data.given_name;
-  }
+  if (infosRes.data.given_name) toRender.user = infosRes.data.given_name;
+  if (infosRes.data.phone_number) toRender.phone_number = infosRes.data.phone_number;
+  if (infosRes.data.email) toRender.email = infosRes.data.email;
+  if (infosRes.data.given_name) toRender.given_name = infosRes.data.given_name;
+
   return toRender;
-}
+};
 
 const getAuthRoute = (params) => {
   return `${params.authorizationURL}?response_type=code`
@@ -76,34 +78,44 @@ const getAuthRoute = (params) => {
 */
 
 const requestTokenWithCode = (params, code, axios) => {
-  return axios.post(`${params.tokenURL}`, {
-    redirect_uri: params.callbackURL,
-    client_id: params.clientID,
-    client_secret: params.clientSecret,
-    grant_type: 'authorization_code',
-    code: code
-  })
-  .catch((err) => {
-    Promise.reject(getErrorFromAxiosRes(err));
-  })
-};
+  if (!code) {
+    return Promise.reject(new Error(`Error fetching your code
+      verify your openIdParameters : ${params}`))
+    }
 
-/**
-* get userInfo with axios to prevent self signed error
-* @param  {Object} params
-* @param  {String} access_token
-* @param  {Object} axios
-* @return {Promise}
-*/
-
-const requestUserInfoWithAccessToken = (params, access_token, axios) => {
-  return axios.get(`${params.userInfoURL}?schema=openid`,
-    { headers: { Authorization: `Bearer ${access_token}`}})
+    return axios.post(`${params.tokenURL}`, {
+      redirect_uri: params.callbackURL,
+      client_id: params.clientID,
+      client_secret: params.clientSecret,
+      grant_type: 'authorization_code',
+      code: code
+    })
     .catch((err) => {
-      Promise.reject(getErrorFromAxiosRes(err));
+      Promise.reject(new Error(getErrorFromAxiosRes(err)));
     })
   };
 
-  module.exports = {
-    initRouter
-  };
+  /**
+  * get userInfo with axios to prevent self signed error
+  * @param  {Object} params
+  * @param  {String} access_token
+  * @param  {Object} axios
+  * @return {Promise}
+  */
+
+  const requestUserInfoWithAccessToken = (params, access_token, axios) => {
+    if (!access_token) {
+      return Promise.reject(new Error(`Error fetching token.
+        Verify your openIdParameters.tokenUrl : ${params.tokenURL}`))
+      }
+
+      return axios.get(`${params.userInfoURL}?schema=openid`,
+        { headers: { Authorization: `Bearer ${access_token}`}})
+        .catch((err) => {
+          Promise.reject(new Error(getErrorFromAxiosRes(err)));
+        })
+      };
+
+      module.exports = {
+        initRouter
+      };
