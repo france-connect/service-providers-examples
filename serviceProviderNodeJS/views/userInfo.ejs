@@ -1,0 +1,31 @@
+<% include includes/header.ejs %>
+<div class="row-fluid">
+    <% include includes/voirie-panel.ejs %>
+    <div class="span6 well">
+        <h4>Avec le Guichet des Parisiens vous pouvez :</h4>
+        <ul class="list-main-content">
+            <li>Accéder aux différentes démarches administratives en ligne de la ville de Paris</li>
+            <li>Retouver l'historique de vos demandes dans votre espace personnel</li>
+            <li>Etre informé de l'état d'avancement de l'instruction de vos demandes</li>
+        </ul>
+    </div>
+    <div class="span6 well">
+      <h4>Mes Infos</h4>
+      <% if(locals.email){ %>
+        <br/> mon email: <%= email %>
+      <% } %>
+      <% if(locals.phone_number){ %>
+        <br/> mon téléphone: <%= phone_number %>
+      <% } %>
+      <% if(locals.given_name){ %>
+        <br/> mon nom: <%= given_name %>
+      <% } %>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
+<% include includes/footer %>
