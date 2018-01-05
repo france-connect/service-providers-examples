@@ -1,10 +1,28 @@
-service-providers-examples
-==========================
+# Fournisseur de Service
 
-Exemples de fournisseurs de services pour France-connect :
-- 1 exemple en NodeJS avec la librairie Passport
+[`doc de référence`](https://partenaires.franceconnect.gouv.fr/fournisseur-service#glossary)
 
-Exemples fournis par des partenaires : 
+`Config valide exemple` :
+```json
+{
+  "fcURL": "https://fcp.integ01.dev-franceconnect.fr",
+  "openIdParameters": {
+    "clientID": "9c771146e9ff7f45a7613ced4be01581b3abbd8e25d45fb3e45559b2577c5030",
+    "clientSecret": "3eb1c3fdd79669e3e4a5971ea0ac06804f27f6cbb20f29daebda95e755677ecb",
+    "callbackURL": "http://localhost:8000/callback",
+    "authorizationURL": "https://fcp.integ01.dev-franceconnect.fr/api/v1/authorize",
+    "tokenURL": "https://fcp.integ01.dev-franceconnect.fr/api/v1/token",
+    "userInfoURL": "https://fcp.integ01.dev-franceconnect.fr/api/v1/userinfo",
+    "logoutURL":"https://fcp.integ01.dev-franceconnect.fr/api/v1/logout",
+    "scope": "openid email phone given_name",
+    "state": "myTestServiceState",
+    "nonce": "timestamp123"
+  }
+}
+```
+# Autres exemples de fournisseurs de services pour France-connect :
+
+`Exemples fournis par des partenaires` :
 - [https://gitlab.laposte.io/rmagnac/france-connect-workshop](https://gitlab.laposte.io/rmagnac/france-connect-workshop) : exemple en Ruby, sans librairie
 - [https://github.com/Lyon-Metropole/poc-france-connect](https://github.com/Lyon-Metropole/poc-france-connect) : exemple en Ruby / Sinatra / Omniauth et OpenID
 - [https://adullact.net/scm/viewvc.php/?root=hackathon-fc](https://adullact.net/scm/viewvc.php/?root=hackathon-fc) : exemple en PHP

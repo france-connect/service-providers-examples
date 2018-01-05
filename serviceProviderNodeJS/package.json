@@ -1,0 +1,14 @@
+{
+  "name": "serviceProvider1",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "./bin/www"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "ejs": "^2.5.7",
+    "express": "~4.9.0"
+  },
+  "devDependencies": {}
+}
