@@ -1,0 +1,14 @@
+<html>
+<body>
+<p>Redirection vers la page d'accueil...</p>
+</body>
+<script type="text/javascript">
+    var url = '<%= urlRedirect %>';
+    if (this.window.opener && !this.window.opener.closed) {
+        this.window.opener.location.href = url;
+        this.window.close();
+    } else {
+        this.window.location.href = url
+    }
+</script>
+</html>

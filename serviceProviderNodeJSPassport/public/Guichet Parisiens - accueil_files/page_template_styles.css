@@ -1,0 +1,325 @@
+body {
+    width: 100%;
+    padding: 0px;
+    font-size: 13px;
+}
+
+fieldset {
+    margin: 15px 0;
+}
+
+legend {
+    font-size: 18px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: inherit;
+}
+
+b {
+    color: #11ABC5;
+}
+
+.alert-info {
+    color: #126b9e;
+}
+
+#fc_login {
+    display: block;
+    text-indent: -9999px;
+    height: 80px;
+    background: url('../images/btn_FC.svg') no-repeat center;
+    background-size: 250px;
+}
+#fc_login:hover {
+    background: url('../images/btn_FC_active.svg') no-repeat center;
+    background-size: 250px;
+}
+
+#btn-deconnect {
+    border: 0;
+    color: #11ABC5;
+    background-color: #11ABC5;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.logo {
+    width: 160px;
+    margin-right: 15px;
+}
+
+.form-actions {
+    background-color: #ffffff;
+}
+
+h2.title {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.title a, .title a:hover {
+    font-weight: 500;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.page-title {
+    font-weight: 500;
+}
+
+/* Banner styles */
+#banner {
+    background: none repeat scroll 0 0 #11ABC5;
+    display: block;
+    margin-bottom: 10px;
+    padding: 15px 0;
+}
+
+.well-gu {
+    font-size: 14px;
+    background-color: #1A9CAF;
+    color: #fff;
+    padding: 0px;
+    margin-top: 20px;
+    -webkit-box-shadow: 5px 4px 8px rgba(0, 0, 0, 0.46);
+    -moz-box-shadow: 5px 4px 8px rgba(0, 0, 0, 0.46);
+    box-shadow: 5px 4px 8px rgba(0, 0, 0, 0.46);
+}
+
+.well-gu h4 {
+    border-bottom: 2px dotted #fff;
+    background-color: #fff;
+    color: #000;
+    padding: 10px 10px;
+    margin: 0;
+}
+
+.well-gu ul {
+    padding: 10px;
+}
+
+.well-gu ul li {
+    border-bottom: 2px dotted #fff;
+    background: url('../images/red_square.png') no-repeat left 10px;
+    padding: 5px 0 5px 15px;
+    color: #d3d3d3;
+}
+
+.well-gu ul li a {
+    color: white;
+}
+
+.demarches {
+    max-width: 360px;
+    padding: 0 19px;
+}
+.demarches li {
+    padding: 5px;
+    font-size: 13px;
+}
+
+/* FOOTER STYLES */
+.footer {
+    background: #34D1C6;
+    background: #1A99AC;
+    padding: 20px;
+    margin-top: 40px;
+    width: 100%;
+    font-size: medium;
+}
+
+.footer h3 {
+    color: white;
+}
+
+ul.social {
+    list-style: none outside none;
+    margin: 0;
+    color: black;
+}
+
+.social {
+    padding-bottom: 50px;
+}
+
+ul.social li {
+    display: inline;
+    float: left;
+    margin-right: 7px;
+}
+
+a.fb {
+    background: url("../images/facebook.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 55px;
+    width: 45px;
+}
+
+a.twt {
+    background: url("../images/twitter.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 55px;
+    width: 45px;
+}
+
+.contact {
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.credits {
+    font-size: 13px;
+}
+
+/* END FOOTER */
+
+/* FORM-HORIZONTAL */
+.form-horizontal .control-label {
+    width: 180px;
+}
+
+.form-horizontal .controls {
+    margin-left: 200px;
+}
+
+/* Nav navtabs */
+.nav-tabs > li > a {
+    font-size: 150%;
+}
+
+.well h1 h2 h3 h4 {
+    color: #000000;
+}
+
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.row-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.list-main-content {
+    margin: 0 0 25px 25px;
+}
+
+.connect {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.connect .btn {
+    font-size: 14px;
+    max-width: 175px;
+    background-color: #ffffff;
+    background-image: none;
+}
+
+.connect .btn img {
+    width: 150%;
+}
+
+.steps {
+    overflow: auto;
+    list-style: none;
+    text-align: center;
+    display: table;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.steps li {
+    vertical-align: middle;
+    display: table-cell;
+    font-size: 17px;
+    font-weight: 200;
+    width: 25%;
+    height: 60px;
+    background-color: #808080;
+    color: #ffffff;
+    padding: 0 5px;
+}
+
+.steps li.complete {
+    background-color: #92dae9;
+}
+
+.steps li.active, .steps li.complete:hover {
+    background-color: #11ABC5;
+}
+
+.steps li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#consent-data-preinscription {
+    border: 3px dotted #0b6ba8;
+    height: 340px;
+}
+
+.info-consent {
+    max-width: 350px;
+}
+
+.info-recap {
+    font-size: 15px;
+    border-radius: 0;
+}
+
+.recap {
+    font-size: 16px;
+}
+
+.recap b {
+    color: #1A99AC;
+}
+
+.btn + .btn {
+    margin-left: 10px;
+}
+
+.btn-main {
+    border-radius: 0;
+}
+
+.help-inline {
+    font-size: 14px;
+}
+
+.logo-demo {
+    text-align: center;
+    text-transform: uppercase;
+    position: absolute;
+    top: 26px;
+    right: -65px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 150px;
+    background-color: #C9131F;
+    color: #fff;
+    padding: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    width: 200px;
+    z-index: 10;
+}
+
+#fconnect-profile {
+    margin-top: 20px;
+}
+
+#fconnect-profile .caret {
+    border-top-color: #FFFFFF;
+    vertical-align: super;
+}
+
+.container-fluid {
+    position: relative;
+    overflow: hidden;
+}

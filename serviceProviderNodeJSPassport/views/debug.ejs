@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Informations de debug</title>
+</head>
+<body>
+<div style="font-size:1.1em">
+    <h1>Informations de debug</h1>
+    <h2>URL de callback appelée par FC</h2>
+    <% if (session.calledCallbackUrl) { %>
+        <p><%= session.calledCallbackUrl %></p>
+    <% } else { %>
+        <p>Non défini</p>
+    <% } %>
+    <h2>UserInfo retourné par le FI via FC</h2>
+    <% if (session && session.userInfo) {
+        var fullUserInfo = session.userInfo;
+        var pivotIdentity = JSON.parse(JSON.stringify(fullUserInfo));
+        delete pivotIdentity.sub;
+        %>
+        <p>UserInfo complet : <%= JSON.stringify(fullUserInfo) %></p>
+        <p>Identité pivot : <%= JSON.stringify(pivotIdentity) %></p>
+    <% }
+    else { %>
+        <p>Pas d'information utilisateur en session.</p>
+    <% } %>
+    <h2>Identité pivot retourné par FC au FD</h2>
+    <% if (session && session.pivotIdentityReturnedByFcToFd) { %>
+        <p><%= JSON.stringify(session.pivotIdentityReturnedByFcToFd) %></p>
+    <% } else { %>
+        <p>Non défini</p>
+    <% } %>
+    <h2>Informations sur la requête</h2>
+    <p>Headers : <%= JSON.stringify(headers) %></p>
+    <% if (session) { %>
+        <p>Session : <%= JSON.stringify(session) %></p>
+    <% } else { %>
+        <p>Session vide</p>
+    <% } %>
+    <h2>IdToken stocké en session</h2>
+    <% if (idToken) { %>
+        <p>idToken : <%= idToken %></p>
+    <% } else { %>
+        <p>Aucun idToken en session</p>
+    <% } %>
+    <h2>Sub fourni par FC</h2>
+    <% if (sub) { %>
+    <p>sub : <span id="subFourniParFC"><%= sub %></span></p>
+    <% } else { %>
+    <p>Aucun idToken en session</p>
+    <% } %>
+</div>
+</body>
+</html>

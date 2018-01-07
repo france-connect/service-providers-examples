@@ -1,0 +1,72 @@
+<% include includes/header.ejs %>
+<div class="row-fluid">
+    <% include includes/voirie-panel.ejs %>
+    <div class="span6 well">
+        <form method="POST" id="crecheForm" class="form-horizontal" target="authFranceConnect">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Vérifiez et complétez les informations suivantes :*</legend>
+
+                <!-- Text input-->
+                <div class="form-group row">
+
+                    <label class="control-label span4" for="textinput-0"
+                           style="text-align:right;float:left;">Nom</label>
+
+                    <div class="controls">
+                        <input id="textinput-0" name="textinput-0" type="text" placeholder=""
+                               class="input-large span8" disabled
+                               value="<%= userInfo.family_name %>">
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Text input-->
+                <div class="form-group row">
+                    <label class="control-label span4" for="textinput-1"
+                           style="text-align:right;float:left;">Prénom</label>
+
+                    <div class="controls">
+                        <input id="textinput-1" name="textinput-1" type="text" placeholder=""
+                               class="input-large span8" disabled
+                               value="<%= userInfo.given_name %>">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group row">
+                    <label class="control-label span4" for="nomEnfant"
+                           style="text-align:right;float:left;">Nom de votre enfant</label>
+
+                    <div class="controls">
+                        <input id="nomEnfant" name="nomEnfant" type="text" placeholder=""
+                               class="input-large span8" required="">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group row">
+                    <label class="control-label span4" for="prenomEnfant"
+                           style="text-align:right;float:left;">Prénom de votre enfant</label>
+
+                    <div class="controls">
+                        <input id="prenomEnfant" name="prenomEnfant" type="text" placeholder=""
+                               class="input-large span8" required="">
+
+                    </div>
+                </div>
+            </fieldset>
+            <input type="submit" value="Confirmer" class="btn btn-large">
+            <br/>
+            <span style="text-size:8px">* Vous allez ensuite être redirigé vers une page qui va vous montrer les données auxquelles va accéder le service pour compléter votre demande. Nous aurons besoin de votre consentement.</span>
+        </form>
+    </div>
+</div>
+
+<% include includes/footer %>
