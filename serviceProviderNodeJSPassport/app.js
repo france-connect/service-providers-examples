@@ -29,7 +29,7 @@ const middleWares = [
       session({ secret: 'Some Secret !!!', key: 'sid'}),
       passport.initialize(),
       passport.session(),
-      // 'openidconnect'
+      'openidconnect'
 ];
 
 initExpress(app, middleWares)
