@@ -18,5 +18,5 @@ const customAxios = axios.create({
 initExpressApp(app, configFCA, customAxios, __dirname);
 app.listen(process.env.PORT || 8000);
 console.log('App listening on :', process.env.PORT || 8000);
-console.log("Pour tester le service Impots.gouv.fr d'exemple : 247095301100810 en compte et 123 en mot de passe");
+console.log("Pour tester le service DINSIC d'exemple : 247095301100810 en compte et 123 en mot de passe");
 module.exports = app;
