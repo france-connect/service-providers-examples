@@ -1,41 +1,102 @@
-'use strict'
-// if(!process.env.NODE_ENV){
-//     process.env.NODE_ENV = 'development';
-// }
+var debug = require('debug')('serviceProvider1');
 
-const debug = require('debug')('serviceProvider1');
-const config = (new (require('./helpers/configManager.js'))())._rawConfig;
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const passport = require('passport');
-const openIdConnectStrategy = require('passport-openidconnect').Strategy;
-const passportAuthenticateWithAcrClaims = require('./helpers/passportAuthenticateWithCustomClaims').PassportAuthenticateWithCustomClaims;
-const indexRoutes = require('./routes/index');
-const dataRoutes = require('./routes/data');
-const initExpress = require('./initExpress').initExpress;
+if(!process.env.NODE_ENV){
+    process.env.NODE_ENV = 'development';
+}
+var config = (new (require('./helpers/configManager.js'))())._rawConfig;
 
-const app = express();
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-const middleWares = [
-      logger('dev'),
-      bodyParser.json(),
-      bodyParser.urlencoded({ extended: false }),
-      cookieParser(),
-      express.static(path.join(__dirname, 'public')),
-      session({ secret: 'Some Secret !!!', key: 'sid'}),
-      passport.initialize(),
-      passport.session(),
-      'openidconnect'
-];
+var session = require('express-session');
+var passport = require('passport');
+var OpenIdConnectStrategy = require('passport-openidconnect').Strategy;
+var passportAuthenticateWithAcrClaims = require('./helpers/passportAuthenticateWithCustomClaims').PassportAuthenticateWithCustomClaims;
 
-initExpress(app, middleWares)
+var indexRoutes = require('./routes/index');
+var dataRoutes = require('./routes/data');
 
-const server = app.listen(app.get('port'), function() {
+var app = express();
 
+
+app.set('port', process.env.PORT || 3001);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({ secret: 'Some Secret !!!', key: 'sid'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.locals.FCUrl = config.fcURL;
+
+var strat = function() {
+    var strategy = new OpenIdConnectStrategy(config.openIdConnectStrategyParameters, function (iss, sub, profile, accesstoke, refreshtoken, done) {
+        process.nextTick(function () {
+            done(null, profile);
+        })
+    });
+
+    var alternateAuthenticate = new passportAuthenticateWithAcrClaims(config.openIdConnectStrategyParameters.userInfoURL, config.openIdConnectStrategyParameters.acr_values);
+    strategy.authenticate = alternateAuthenticate.authenticate;
+    return strategy;
+};
+
+passport.use('openidconnect', strat());
+
+passport.serializeUser(function(user, done){
+    done(null, user);
+});
+
+passport.deserializeUser(function(obj, done){
+    done(null, obj);
+});
+
+app.use('/', indexRoutes);
+app.use('/data', dataRoutes);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
+var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
 
