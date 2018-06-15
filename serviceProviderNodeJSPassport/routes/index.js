@@ -225,7 +225,7 @@ router.get('/logout', function (req, res) {
     delete req.session.user;
 
     req.session.state = crypto.randomBytes(25).toString('hex');
-    var idTokenHint = jwt.encode({ aud: config.openIdConnectStrategyParameters.clientID }, configuration.openIdConnectStrategyParameters.clientSecret);
+    var idTokenHint = jwt.encode({ aud: configuration.openIdConnectStrategyParameters.clientID }, configuration.openIdConnectStrategyParameters.clientSecret);
     res.redirect(configuration.openIdConnectStrategyParameters.logoutURL + '?id_token_hint=' + idTokenHint + '&state=' + req.session.state);
 
 });
