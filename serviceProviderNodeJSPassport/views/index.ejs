@@ -48,7 +48,7 @@
             <li><b>phone_number</b>: <%= userInfo.phone_number %></li>
             <% if (userInfo._claim_names) { %>
             <% Object.keys(userInfo._claim_names).forEach(function(claim){ %>
-            <li><b><%= claim %> </b>: <%= userInfo._claim_sources.src1[claim]  %></li>
+            <li><b><%= claim %> </b>: <%= userInfo[claim]  %></li>
             <% }); %>
             <% } %>
         </ul>
