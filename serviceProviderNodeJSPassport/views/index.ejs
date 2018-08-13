@@ -29,31 +29,6 @@
 
         <p>L'espace usager vous offre la possibilité de suivre ces demandes 24h/24 et 7 jours/7</p>
     </div>
-
-    <% if(agentMode) { %>
-    <div class="span3 well well-gu">
-        <h4>Info agent</h4>
-        <ul class="unstyled">
-            <li><b>given_name</b>: <%= userInfo.given_name %></li>
-            <li><b>family_name</b>: <%= userInfo.family_name %></li>
-            <li><b>birthdate</b>: <%= userInfo.birthdate %></li>
-            <li><b>gender</b>: <%= userInfo.gender %></li>
-            <li><b>birthplace</b>: <%= userInfo.birthplace %></li>
-            <li><b>birthcountry</b>: <%= userInfo.birthcountry %></li>
-            <li><b>email</b>: <%= userInfo.email %></li>
-            <li><b>preferred_username</b>: <%= userInfo.preferred_username %></li>
-            <% if (userInfo.address) { %>
-            <li><b>address.formatted</b>: <%= userInfo.address.formatted %></li>
-            <% } %>
-            <li><b>phone_number</b>: <%= userInfo.phone_number %></li>
-            <% if (userInfo._claim_names) { %>
-            <% Object.keys(userInfo._claim_names).forEach(function(claim){ %>
-            <li><b><%= claim %> </b>: <%= userInfo[claim]  %></li>
-            <% }); %>
-            <% } %>
-        </ul>
-    </div>
-    <% } else { %>
     <div class="span3 well well-gu">
         <h4>Voirie</h4>
         <ul class="unstyled">
@@ -69,7 +44,7 @@
             <li>Cotation de votre logement</li>
         </ul>
     </div>
-    <% } %>
+    
     <% } else { %>
     <div class="span6 well">
         <h4>Avec le Guichet des Parisiens vous pouvez :</h4>

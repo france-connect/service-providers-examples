@@ -33,11 +33,7 @@ router.get('/login_org', (req, res, next) => {
     req.session.state = crypto.randomBytes(25).toString('hex');
     req.session.nonce = crypto.randomBytes(25).toString('hex');
 
-    if (config.isModeAgents()) {
-        req.session.eIDASLVL = 'eidas1 siren NAF_code organisation_name';
-    } else {
-        req.session.eIDASLVL = req.query.acr_values || 'eidas1';
-    }
+    req.session.eIDASLVL = req.query.acr_values || 'eidas1';
 
     res.redirect(`${configuration.oauth.authorizationURL}?response_type=code&client_id=${configuration.openIdConnectStrategyParameters.clientID}&acr_values=${req.session.eIDASLVL}&redirect_uri=${configuration.openIdConnectStrategyParameters.callbackURL}&scope=openid ${configuration.openIdConnectStrategyParameters.scope.join(' ')}&state=${req.session.state}&nonce=${req.session.nonce}`);
 }, function (req, res) {
@@ -163,13 +159,6 @@ router.get('/oidc_callback', checkStateParams, function (req, res, next) {
             try {
 
                 buffer = JSON.parse(buffer);
-                if (config.isModeAgents()) {
-                    const claimSourcesDecode = JSON.parse(jwt.decode(buffer._claim_sources.src1.JWT, configuration.openIdConnectStrategyParameters.clientSecret));
-                    // clear acr_values added into buffer (userinfos send by FCA)
-                    const userInfos = {...claimSourcesDecode, ...buffer};
-                    buffer = userInfos;
-                }
-
                 req.session.userinfos = buffer;
                 next();
 
@@ -194,7 +183,7 @@ router.get('/demarche/etape1', function (req, res) {
     if (req.session.userinfos !== undefined) {
         const templateParams = {
             title: 'Démonstrateur France Connect - Inscription à la cantine scolaire',
-            user: req.session.userinfos, demoMode: false, agentMode: true
+            user: req.session.userinfos, demoMode: false
         };
 
         if (configuration.env === 'development' && req.session.passport && req.session.userinfos) {
