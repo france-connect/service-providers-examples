@@ -62,7 +62,12 @@ app.get('/profile', (req, res) => {
   const user = req.session.userInfo;
   const isUsingFDMock = config.USING_FD_MOCK;
   const isFdData = false;
-  res.render('pages/profile', { user, isAuth, isFdData, isUsingFDMock });
+  res.render('pages/profile', {
+    user,
+    isAuth,
+    isFdData,
+    isUsingFDMock,
+  });
 });
 
 app.get('/callFd', (req, res) => {
@@ -90,4 +95,4 @@ const server = app.listen(port, () => {
   console.log(`\x1b[32mServer listening on http://localhost:${port}\x1b[0m`);
 });
 
-export default app;
+export default server;
