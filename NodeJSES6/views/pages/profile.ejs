@@ -1,0 +1,81 @@
+<% include ../includes/header.ejs %>
+<section class="container custom-content">
+    <div class="columns">
+        <div class="column is-half">
+            <ul>
+                <li>Obtenir des informations de La direction générale des Finances publiques (DGFIP)</li>
+            </ul>
+            <br>
+            <% if (!isUsingFDMock) { %>
+            <p><b>Afin d' activer la fonctionalité ci-dessus, il faut: </b></p>
+            <ul>
+                <li>
+                    - Installer et lancer notre démonstrateur de fournisseur de donnés (nodejs_ES6).
+                    <a href="https://github.com/france-connect/data-providers-examples"
+                       aria-label="lien vers exemple fournisseur de donnés sur github"
+                       title="lien repo github fournisseur de donnés"
+                       target="_blank">
+                        lien github
+                    </a>
+                </li>
+                <li>- Passer à "true" la valeur de "USING_FD_MOCK" dans config/config.json.</li>
+                <li>- Puis cliquer sur le button ci-dessous.</li>
+            </ul>
+            <br>
+            <div class="has-text-centered">
+                <button class="button is-link"
+                        href="/callFD"
+                        aria-label="faire un appel au fournisseur de donnés"
+                        title="faire un appel au fournisseur de donnés"
+                        target="_blank"
+                        disabled>
+                    Appel à la DGFIP
+                </button>
+            </div>
+            <% } else { %>
+            <div class="has-text-centered"><a class="button is-link" href="/callFD">Appel à la DGFIP</a></div>
+            <% } %>
+        </div>
+        <% if (isFdData) { %>
+        <table class="table">
+            <thead>
+            <tr class="has-text-grey-dark">
+                <th>Informations</th>
+                <th>Valeurs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="has-text-grey-dark">
+                <th>Revenu Fiscal de Référence (RFR)</th>
+                <td><%= dgfipData.RFR %></td>
+            </tr>
+            <tr class="has-text-grey-dark">
+                <th>Nombre de personnes à charge</th>
+                <td><%= dgfipData.nombreDePersonnesACharge %></td>
+            </tr>
+            <tr class="has-text-grey-dark">
+                <th>Enfants à charge en garde alternée</th>
+                <td><%= dgfipData.enfantsAChargeEnGardeAlternee %></td>
+            </tr>
+            <tr class="has-text-grey-dark">
+                <th>Personnes Invalides à charge</th>
+                <td><%= dgfipData.personnesInvalidesACharge %></td>
+            </tr>
+            <tr class="has-text-grey-dark">
+                <th>Enfants Majeurs Célibataires</th>
+                <td><%= dgfipData.enfantsMajeursCelibataires %></td>
+            </tr>
+            <tr class="has-text-grey-dark">
+                <th>Enfants Majeurs Maries ou Chargé de famille</th>
+                <td><%= dgfipData.enfantsMajeursMariesOuChargeDeFamille %></td>
+            </tr>
+            <tr class="has-text-grey-dark">
+                <th>NbPacP</th>
+                <td><%= dgfipData.nbPacP %></td>
+            </tr>
+            </tbody>
+        </table>
+        <% } %>
+    </div>
+</section>
+<% include ../includes/footer.ejs %>
