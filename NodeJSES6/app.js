@@ -5,7 +5,7 @@
 import express from 'express';
 import logger from 'morgan';
 import session from 'express-session';
-
+import sessionstore from 'sessionstore';
 import config from './config/config.json';
 import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
 import getAccessToken from './controllers/accessToken';
@@ -24,11 +24,13 @@ const sessionConfig = {
   resave: true,
 };
 
-// session config for production
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1); // trust first proxy
-  sessionConfig.cookie.secure = true; // serve secure cookies
-}
+app.use(session({
+  store: sessionstore.createSessionStore(),
+  secret: 'demo secret', // put your own secret
+  cookie: {},
+  saveUninitialized: true,
+  resave: true,
+}));
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
