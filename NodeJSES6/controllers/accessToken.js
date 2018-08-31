@@ -37,6 +37,7 @@ const getAccessToken = async (res, req) => {
     .then(response => response.data)
     .then((tokenData) => {
       req.accessToken = tokenData.access_token;
+      req.session.accessToken = tokenData.access_token;
       req.session.id_token = tokenData.id_token;
       // Make a call to the France Connect API endpoint to get user data.
       getUser(req, res);

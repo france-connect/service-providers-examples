@@ -13,17 +13,14 @@ import getFDData from './controllers/callFD';
 
 const app = express();
 
-/**
- * session config
- * @type {{secret: string, cookie: {}, saveUninitialized: boolean, resave: boolean}}
- */
-const sessionConfig = {
-  secret: 'demo secret', // put your own secret
-  cookie: {},
-  saveUninitialized: true,
-  resave: true,
-};
+let isAuth;
 
+/**
+ * Session config
+ * About the warning on connect.session()
+ * @see {@link https://github.com/expressjs/session/issues/556}
+ * @see {@link https://github.com/expressjs/session/blob/master/README.md#compatible-session-stores}
+ */
 app.use(session({
   store: sessionstore.createSessionStore(),
   secret: 'demo secret', // put your own secret
@@ -38,12 +35,16 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(session(sessionConfig));
 
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
-  const isAuth = false;
-  res.render('pages/index', { isAuth });
+  isAuth = false;
+  if(req.session.accessToken === undefined) {
+    console.log('hello')
+    res.render('pages/index', { isAuth });
+  }else {
+    res.redirect('profile');
+  }
 });
 
 app.get('/login', (req, res) => {
@@ -59,17 +60,21 @@ app.get('/callback', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-  const isAuth = true;
+  isAuth = true;
   // get user info from session
   const user = req.session.userInfo;
   const isUsingFDMock = config.USING_FD_MOCK;
   const isFdData = false;
-  res.render('pages/profile', {
-    user,
-    isAuth,
-    isFdData,
-    isUsingFDMock,
-  });
+  if (req.session.accessToken !== undefined) {
+    res.render('pages/profile', {
+      user,
+      isAuth,
+      isFdData,
+      isUsingFDMock,
+    });
+  } else {
+    res.sendStatus(401).send('You need to be Authenticate.');
+  }
 });
 
 app.get('/callFd', (req, res) => {
@@ -81,7 +86,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/logged-out', (req, res) => {
-  const isAuth = false;
+  isAuth = false;
   // Resetting the id token hint.
   req.session.id_token = null;
   // Resetting the userInfo.

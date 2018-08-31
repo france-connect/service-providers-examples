@@ -4,12 +4,10 @@
   "description": "test du btn fc en tant que fc",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production nodemon ./bin/www",
+    "start": "nodemon ./bin/www",
     "test": "NODE_ENV=test mocha -R spec ./test/* --require babel-polyfill --require babel-register",
     "lint": "eslint ."
   },
-  "author": "Sandy PIERRE",
-  "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
