@@ -8,10 +8,16 @@ import axios from 'axios/index';
 import config from '../config/config.json';
 
 const fdMockUrl = config.FD_MOCK_URL_DGFIP_END_POINT;
-// this value is only for a demo purpose you should use the Access token send by FC
-const fakeAccessToken = config.FAKE_ACCESS_TOKEN;
 
 const getFDData = (req, res) => {
+  let fakeAccessToken;
+  if (process.env.NODE_ENV !== 'production') {
+    // This value is only for a demo purpose you should use the Access token send by FC
+    fakeAccessToken = config.FAKE_ACCESS_TOKEN;
+  } else {
+    // Set the value with the access token send by FC
+    fakeAccessToken = req.session.accessToken;
+  }
   axios({
     method: 'GET',
     /**
@@ -28,13 +34,18 @@ const getFDData = (req, res) => {
       const user = req.session.userInfo;
       const dgfipData = [];
       const responsedata = Object.entries(fdResponse.data);
+      const isUsingFDMock = config.USING_FD_MOCK;
 
       // eslint-disable-next-line no-restricted-syntax
       for (const [key, value] of responsedata) {
         dgfipData[key] = value;
       }
       res.render('pages/profile', {
-        user, isAuth, isFdData, dgfipData,
+        user,
+        isAuth,
+        isFdData,
+        dgfipData,
+        isUsingFDMock,
       });
     })
     .catch(err => res.send(err.message));
