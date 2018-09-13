@@ -39,12 +39,7 @@ app.use(express.static('public'));
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
   isAuth = false;
-  if(req.session.accessToken === undefined) {
-    console.log('hello')
-    res.render('pages/index', { isAuth });
-  }else {
-    res.redirect('profile');
-  }
+  res.render('pages/index', { isAuth });
 });
 
 app.get('/login', (req, res) => {
