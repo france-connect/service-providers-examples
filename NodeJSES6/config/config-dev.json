@@ -1,0 +1,17 @@
+{
+  "env": "development",
+  "FC_URL": "https://fcp.dev.dev-franceconnect.fr",
+  "AUTHORIZATION_URL": "https://fcp.dev.dev-franceconnect.fr/api/v1/authorize",
+  "TOKEN_URL": "https://fcp.dev.dev-franceconnect.fr/api/v1/token",
+  "USERINFO_URL": "https://fcp.dev.dev-franceconnect.fr/api/v1/userinfo",
+  "LOGOUT_URL": "https://fcp.dev.dev-franceconnect.fr/api/v1/logout",
+  "CLIENT_SECRET": "c48ff5ae96e870f507507555f7bc4dd361d2aac31df219fe6e92bbcca65f73f5",
+  "SECRET_KEY": "8f373c6e6a48ce0f5931f414b6739e4e0aa82eda20a083dc5c0522b6c691b17b",
+  "REDIRECT_URL": "http://localhost:3000/callback",
+  "LOGOUT_REDIRECT_URL": "http://localhost:3000/logged-out",
+  "SCOPE": "openid profile birth",
+  "FD_MOCK_URL": "https://fdp.dev.dev-franceconnect.fr",
+  "FD_MOCK_URL_DGFIP_END_POINT": "https://fdp.dev.dev-franceconnect.fr/dgfip",
+  "FAKE_ACCESS_TOKEN": "9af033eb295d0fe113988d29a26527f920114973b3a1ca7bdb44768fd0c73937",
+  "USING_FD_MOCK": false
+}
