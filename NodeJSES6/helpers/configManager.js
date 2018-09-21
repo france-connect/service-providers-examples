@@ -3,7 +3,7 @@
 let  configPath = '../config/config.json';
 
 if (process.env.name) {
-  configPath = `../config-${process.env.name}.json`;
+  configPath = `../config/config-${process.env.name}.json`;
 }
 const config = require(configPath)
 
