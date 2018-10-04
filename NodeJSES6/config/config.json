@@ -8,7 +8,7 @@
   "SECRET_KEY": "a970fc88b3111fcfdce515c2ee03488d8a349e5379a3ba2aa48c225dcea243a5",
   "REDIRECT_URL": "https://fsp1.dev.dev-franceconnect.fr/callback",
   "LOGOUT_REDIRECT_URL": "https://fsp1.dev.dev-franceconnect.fr/logged-out",
-  "SCOPE": "openid profile birth",
+  "SCOPE": "openid profile birth dgfip_revenu_fiscal_de_reference dgfip_aft dgfip_nbpac dgfip_nbpacf",
   "FD_MOCK_URL": "https://fdp.dev.dev-franceconnect.fr",
   "FD_MOCK_URL_DGFIP_END_POINT": "https://fdp.dev.dev-franceconnect.fr/dgfip",
   "FAKE_ACCESS_TOKEN": "9af033eb295d0fe113988d29a26527f920114973b3a1ca7bdb44768fd0c73937",
