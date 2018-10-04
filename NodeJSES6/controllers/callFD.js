@@ -10,14 +10,8 @@ import config from '../config/config.json';
 const fdMockUrl = config.FD_MOCK_URL_DGFIP_END_POINT;
 
 const getFDData = (req, res) => {
-  let fakeAccessToken;
-  if (process.env.NODE_ENV !== 'production') {
-    // This value is only for a demo purpose you should use the Access token send by FC
-    fakeAccessToken = config.FAKE_ACCESS_TOKEN;
-  } else {
-    // Set the value with the access token send by FC
-    fakeAccessToken = req.session.accessToken;
-  }
+  let accessToken;
+  accessToken = req.session.accessToken;
   axios({
     method: 'GET',
     /**
@@ -25,7 +19,7 @@ const getFDData = (req, res) => {
      * If you want to use your own code change the url's value in the config/config.json file.
      */
     url: fdMockUrl,
-    headers: { Authorization: `Bearer ${fakeAccessToken}` },
+    headers: { Authorization: `Bearer ${accessToken}` },
   })
     .then((fdResponse) => {
       const isFdData = true;
