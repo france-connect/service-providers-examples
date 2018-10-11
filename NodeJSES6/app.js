@@ -1,3 +1,5 @@
+'use strict'
+
 /**
  * Entry point of the service provider(FS) demo app.
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }

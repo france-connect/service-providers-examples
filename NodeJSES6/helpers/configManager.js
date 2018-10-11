@@ -1,10 +1,13 @@
-'use strict';
 
-let  configPath = '../config/config.json';
+
+let configPath;
 
 if (process.env.name) {
   configPath = `../config/config-${process.env.name}.json`;
+} else {
+  configPath = '../config/config.json';
 }
-const config = require(configPath)
+// eslint-disable-next-line import/no-dynamic-require
+const config = require(configPath);
 
 export default config;
