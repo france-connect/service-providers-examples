@@ -23,7 +23,7 @@ describe('controllers/accessToken', () => {
       .send({
         grant_type: 'authorization_code',
         redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
+        client_id: config.CLIENT_ID,
         client_secret: config.SECRET_KEY,
         code: 'valid_authorization_code',
       })
@@ -41,7 +41,7 @@ describe('controllers/accessToken', () => {
       .send({
         grant_type: 'authorization_code',
         redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
+        client_id: config.CLIENT_ID,
         client_secret: config.SECRET_KEY,
         code: 'unvalid_authorization_code',
       })
@@ -58,7 +58,7 @@ describe('controllers/accessToken', () => {
       .send({
         grant_type: 'none_valid_grant_type',
         redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
+        client_id: config.CLIENT_ID,
         client_secret: config.SECRET_KEY,
         code: 'valid_authorization_code',
       })
@@ -92,7 +92,7 @@ describe('controllers/accessToken', () => {
       .send({
         grant_type: 'authorization_code',
         redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
+        client_id: config.CLIENT_ID,
         client_secret: 'unknown_client_secret',
         code: 'valid_authorization_code',
       })

@@ -6,7 +6,7 @@
 import config from './configManager';
 // TODO hard code state et nonce because they normaly generate from every request
 export const getAuthorizationUrl = () => `${config.AUTHORIZATION_URL}?response_type=code`
-    + `&client_id=${config.CLIENT_SECRET}&redirect_uri=${config.REDIRECT_URL}`
+    + `&client_id=${config.CLIENT_ID}&redirect_uri=${config.REDIRECT_URL}`
     + `&scope=${config.SCOPE}&state=customState11&nonce=customNonce11`;
 
 

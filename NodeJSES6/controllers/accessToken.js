@@ -9,7 +9,7 @@ import config from '../config/config.json';
 
 const tokenUrl = config.TOKEN_URL;
 const redirectUrl = config.REDIRECT_URL;
-const clientId = config.CLIENT_SECRET;
+const clientId = config.CLIENT_ID;
 const secretKey = config.SECRET_KEY;
 
 /**
