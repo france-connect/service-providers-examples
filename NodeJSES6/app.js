@@ -55,21 +55,21 @@ app.get('/callback', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
+  if (req.session.accessToken === undefined) {
+    res.sendStatus(401).send('You need to be Authenticate.');
+  }
+
   isUserAuthenticated = true;
   // get user info from session
   const user = req.session.userInfo;
   const isUsingFDMock = config.USING_FD_MOCK;
   const isFdData = false;
-  if (req.session.accessToken !== undefined) {
-    res.render('pages/profile', {
-      user,
-      isUserAuthenticated,
-      isFdData,
-      isUsingFDMock,
-    });
-  } else {
-    res.sendStatus(401).send('You need to be Authenticate.');
-  }
+  res.render('pages/profile', {
+    user,
+    isUserAuthenticated,
+    isFdData,
+    isUsingFDMock,
+  });
 });
 
 app.get('/callFd', (req, res) => {
