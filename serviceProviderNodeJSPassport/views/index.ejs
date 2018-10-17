@@ -19,7 +19,13 @@
                 address.formatted: <%= userInfo.address.formatted %><br>
                 <% } %>
                 phone_number: <%= userInfo.phone_number %><br>">
-                    Bonjour <%= ((userInfo.gender === 'male') ? 'M. ' : 'Mme ') + userInfo.family_name %>
+                    Bonjour 
+                    <% if (userInfo.gender.toLowerCase() === 'male') {  %>
+                        M.
+                    <% } else if (userInfo.gender.toLowerCase() === 'female') {  %>
+                        Mme
+                    <% } %>
+                    <%= userInfo.given_name + ' ' + userInfo.family_name %>
                 </a><span class="caret"></span>
             </h4>
         </div>
