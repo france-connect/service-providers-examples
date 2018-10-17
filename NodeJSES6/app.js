@@ -13,7 +13,7 @@ import getFDData from './controllers/callFD';
 
 const app = express();
 
-let isAuth;
+let isUserAuthenticated;
 
 /**
  * Session config
@@ -38,8 +38,8 @@ app.use(express.static('public'));
 
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
-  isAuth = false;
-  res.render('pages/index', { isAuth });
+  isUserAuthenticated = false;
+  res.render('pages/index', { isUserAuthenticated });
 });
 
 app.get('/login', (req, res) => {
@@ -55,7 +55,7 @@ app.get('/callback', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-  isAuth = true;
+  isUserAuthenticated = true;
   // get user info from session
   const user = req.session.userInfo;
   const isUsingFDMock = config.USING_FD_MOCK;
@@ -63,7 +63,7 @@ app.get('/profile', (req, res) => {
   if (req.session.accessToken !== undefined) {
     res.render('pages/profile', {
       user,
-      isAuth,
+      isUserAuthenticated,
       isFdData,
       isUsingFDMock,
     });
@@ -81,12 +81,12 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/logged-out', (req, res) => {
-  isAuth = false;
+  isUserAuthenticated = false;
   // Resetting the id token hint.
   req.session.id_token = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.render('pages/logged-out', { isAuth });
+  res.render('pages/logged-out', { isUserAuthenticated });
 });
 
 // Setting app port
