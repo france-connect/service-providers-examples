@@ -49,14 +49,15 @@ app.get('/login', (req, res) => {
 app.get('/callback', (req, res) => {
   // check if the mandatory Authorization code is there.
   if (!req.query.code) {
-    res.sendStatus(400);
+    return res.sendStatus(400);
   }
-  getAccessToken(res, req);
+
+  return getAccessToken(res, req);
 });
 
 app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {
-    res.sendStatus(401);
+    return res.sendStatus(401);
   }
 
   isUserAuthenticated = true;
@@ -64,7 +65,7 @@ app.get('/profile', (req, res) => {
   const user = req.session.userInfo;
   const isUsingFDMock = config.USING_FD_MOCK;
   const isFdData = false;
-  res.render('pages/profile', {
+  return res.render('pages/profile', {
     user,
     isUserAuthenticated,
     isFdData,
