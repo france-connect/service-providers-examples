@@ -55,7 +55,7 @@ app.get('/callback', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-  if (req.session.accessToken === undefined) {
+  if (!req.session.accessToken) {
     res.sendStatus(401).send('You need to be Authenticate.');
   }
 
