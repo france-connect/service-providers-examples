@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "NODE_ENV=test mocha -R spec ./test/* --require babel-polyfill --require babel-register" ,
+    "test": "NODE_ENV=test mocha -R spec ./test/* --require babel-polyfill --require babel-register",
     "lint": "eslint ."
   },
   "dependencies": {
