@@ -13,7 +13,7 @@ import getFDData from './controllers/callFD';
 
 const app = express();
 
-let isAuth;
+let isUserAuthenticated;
 
 /**
  * Session config
@@ -38,8 +38,8 @@ app.use(express.static('public'));
 
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
-  isAuth = false;
-  res.render('pages/index', { isAuth });
+  isUserAuthenticated = false;
+  res.render('pages/index', { isUserAuthenticated });
 });
 
 app.get('/login', (req, res) => {
@@ -49,27 +49,28 @@ app.get('/login', (req, res) => {
 app.get('/callback', (req, res) => {
   // check if the mandatory Authorization code is there.
   if (!req.query.code) {
-    res.sendStatus(400);
+    return res.sendStatus(400);
   }
-  getAccessToken(res, req);
+
+  return getAccessToken(res, req);
 });
 
 app.get('/profile', (req, res) => {
-  isAuth = true;
+  if (!req.session.accessToken) {
+    return res.sendStatus(401);
+  }
+
+  isUserAuthenticated = true;
   // get user info from session
   const user = req.session.userInfo;
   const isUsingFDMock = config.USING_FD_MOCK;
   const isFdData = false;
-  if (req.session.accessToken !== undefined) {
-    res.render('pages/profile', {
-      user,
-      isAuth,
-      isFdData,
-      isUsingFDMock,
-    });
-  } else {
-    res.sendStatus(401).send('You need to be Authenticate.');
-  }
+  return res.render('pages/profile', {
+    user,
+    isUserAuthenticated,
+    isFdData,
+    isUsingFDMock,
+  });
 });
 
 app.get('/callFd', (req, res) => {
@@ -81,12 +82,12 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/logged-out', (req, res) => {
-  isAuth = false;
+  isUserAuthenticated = false;
   // Resetting the id token hint.
   req.session.id_token = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.render('pages/logged-out', { isAuth });
+  res.render('pages/logged-out', { isUserAuthenticated });
 });
 
 // Setting app port

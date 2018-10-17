@@ -29,7 +29,7 @@ const getFDData = (req, res) => {
   })
     .then((fdResponse) => {
       const isFdData = true;
-      const isAuth = true;
+      const isUserAuthenticated = true;
       // Put user information in session
       const user = req.session.userInfo;
       const dgfipData = [];
@@ -42,7 +42,7 @@ const getFDData = (req, res) => {
       }
       res.render('pages/profile', {
         user,
-        isAuth,
+        isUserAuthenticated,
         isFdData,
         dgfipData,
         isUsingFDMock,
