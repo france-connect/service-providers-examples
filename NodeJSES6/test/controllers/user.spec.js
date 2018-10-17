@@ -19,16 +19,6 @@ describe('controllers/user', () => {
       });
   });
 
-  it('getUser() should call the "/api/v1/userinfo" with wrong Authorization is not Bearer. Endpoint: response status 400', () => {
-    chai.request(app)
-      .get('/api/v1/userinfo')
-      .set('Authorization', 'Basic 0631752ca22134a1433a6ca951fee85')
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        done();
-      });
-  });
-
   it('getUser() should call the "/api/v1/userinfo" with wrong access token. Endpoint: response status 400', () => {
     chai.request(config.FC_URL)
       .get('/api/v1/userinfo')
