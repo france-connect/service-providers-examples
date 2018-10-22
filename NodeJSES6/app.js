@@ -8,12 +8,10 @@ import session from 'express-session';
 import sessionstore from 'sessionstore';
 import config from './config/config.json';
 import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
-import getAccessToken from './controllers/accessToken';
-import getFDData from './controllers/callFD';
+import oauthCallback from './controllers/oauthCallback';
+import getDgfipData from './controllers/getDgfipData';
 
 const app = express();
-
-let isUserAuthenticated;
 
 /**
  * Session config
@@ -38,56 +36,40 @@ app.use(express.static('public'));
 
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
-  isUserAuthenticated = false;
-  res.render('pages/index', { isUserAuthenticated });
+  res.render('pages/index', { isUserAuthenticated: false });
 });
 
 app.get('/login', (req, res) => {
   res.redirect(getAuthorizationUrl());
 });
 
-app.get('/callback', (req, res) => {
-  // check if the mandatory Authorization code is there.
-  if (!req.query.code) {
-    return res.sendStatus(400);
-  }
-
-  return getAccessToken(res, req);
-});
+app.get('/callback', oauthCallback);
 
 app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {
     return res.sendStatus(401);
   }
 
-  isUserAuthenticated = true;
-  // get user info from session
-  const user = req.session.userInfo;
-  const isUsingFDMock = config.USING_FD_MOCK;
-  const isFdData = false;
   return res.render('pages/profile', {
-    user,
-    isUserAuthenticated,
-    isFdData,
-    isUsingFDMock,
+    // get user info from session
+    user: req.session.userInfo,
+    isUserAuthenticated: true,
+    isUsingFDMock: config.USING_FD_MOCK,
   });
 });
 
-app.get('/callFd', (req, res) => {
-  getFDData(req, res);
-});
+app.get('/callFd', getDgfipData);
 
 app.get('/logout', (req, res) => {
   res.redirect(getLogoutUrl(req));
 });
 
 app.get('/logged-out', (req, res) => {
-  isUserAuthenticated = false;
   // Resetting the id token hint.
-  req.session.id_token = null;
+  req.session.idToken = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.render('pages/logged-out', { isUserAuthenticated });
+  res.render('pages/logged-out', { isUserAuthenticated: false });
 });
 
 // Setting app port

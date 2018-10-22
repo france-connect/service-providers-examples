@@ -14,7 +14,7 @@ describe('controllers/accessToken', () => {
       access_token: '0631752ca22134a1433a6ca951fee85dfd7fe9ac93e2d67d230ad935e8106423',
       token_type: 'Bearer',
       expires_in: 60,
-      id_token: 'id_hint_token',
+      idToken: 'id_hint_token',
     };
 
     chai.request(config.FC_URL)
