@@ -14,5 +14,5 @@ export const getAuthorizationUrl = () => `${config.AUTHORIZATION_URL}?response_t
  * Format the url 's that is used in a redirect call to France Connect logout API endpoint
  * @returns {string}
  */
-export const getLogoutUrl = req => `${config.LOGOUT_URL}?id_token_hint=${req.session.id_token}`
+export const getLogoutUrl = req => `${config.LOGOUT_URL}?id_token_hint=${req.session.idToken}`
   + `&state=customState11&post_logout_redirect_uri=${config.LOGOUT_REDIRECT_URL}`;
