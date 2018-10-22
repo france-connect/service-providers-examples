@@ -4,7 +4,7 @@
  */
 import axios from 'axios';
 import querystring from 'querystring';
-import config from '../config/config.json';
+import config from '../config/configManager';
 
 /**
  * Init FranceConnect authentication login process.
@@ -19,9 +19,9 @@ const oauthCallback = async (req, res, next) => {
   // Set request params.
   const body = {
     grant_type: 'authorization_code',
-    redirect_uri: config.REDIRECT_URL,
+    redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`,
     client_id: config.CLIENT_ID,
-    client_secret: config.SECRET_KEY,
+    client_secret: config.CLIENT_SECRET,
     code: req.query.code,
   };
 
@@ -31,7 +31,7 @@ const oauthCallback = async (req, res, next) => {
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: querystring.stringify(body),
-      url: config.TOKEN_URL,
+      url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
 
     // Make a call to the France Connect API endpoint to get user data.
@@ -46,7 +46,7 @@ const oauthCallback = async (req, res, next) => {
     const { data: userInfo } = await axios({
       method: 'GET',
       headers: { Authorization: `Bearer ${accessToken}` },
-      url: config.USERINFO_URL,
+      url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
     });
 
     // Helper to set userInfo value available to the profile page.

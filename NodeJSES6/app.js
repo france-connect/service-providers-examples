@@ -6,7 +6,7 @@ import express from 'express';
 import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
-import config from './config/config.json';
+import config from './config/configManager';
 import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
 import getDgfipData from './controllers/getDgfipData';
@@ -54,7 +54,7 @@ app.get('/profile', (req, res) => {
     // get user info from session
     user: req.session.userInfo,
     isUserAuthenticated: true,
-    isUsingFDMock: config.USING_FD_MOCK,
+    isUsingFDMock: config.USE_FD,
   });
 });
 

@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import config from '../../config/config.json';
+import config from '../../config/configManager';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -18,13 +18,13 @@ describe('controllers/accessToken', () => {
     };
 
     chai.request(config.FC_URL)
-      .post('/api/v1/token')
+      .post(config.TOKEN_FC_PATH)
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
         grant_type: 'authorization_code',
-        redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
-        client_secret: config.SECRET_KEY,
+        redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`,
+        client_id: config.CLIENT_ID,
+        client_secret: config.CLIENT_SECRET,
         code: 'valid_authorization_code',
       })
       .end((err, res) => {
@@ -40,9 +40,9 @@ describe('controllers/accessToken', () => {
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
         grant_type: 'authorization_code',
-        redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
-        client_secret: config.SECRET_KEY,
+        redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`,
+        client_id: config.CLIENT_ID,
+        client_secret: config.CLIENT_SECRET,
         code: 'unvalid_authorization_code',
       })
       .end((err, res) => {
@@ -57,9 +57,9 @@ describe('controllers/accessToken', () => {
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
         grant_type: 'none_valid_grant_type',
-        redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
-        client_secret: config.SECRET_KEY,
+        redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`,
+        client_id: config.CLIENT_ID,
+        client_secret: config.CLIENT_SECRET,
         code: 'valid_authorization_code',
       })
       .end((err, res) => {
@@ -74,9 +74,9 @@ describe('controllers/accessToken', () => {
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
         grant_type: 'authorization_code',
-        redirect_uri: config.REDIRECT_URL,
+        redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`,
         client_id: 'unknown_client_id',
-        client_secret: config.SECRET_KEY,
+        client_secret: config.CLIENT_SECRET,
         code: 'valid_authorization_code',
       })
       .end((err, res) => {
@@ -91,8 +91,8 @@ describe('controllers/accessToken', () => {
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
         grant_type: 'authorization_code',
-        redirect_uri: config.REDIRECT_URL,
-        client_id: config.CLIENT_SECRET,
+        redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`,
+        client_id: config.CLIENT_ID,
         client_secret: 'unknown_client_secret',
         code: 'valid_authorization_code',
       })
