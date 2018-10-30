@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "start_dev": "nodemon ./bin/www",
     "test": "NODE_ENV=test mocha -R spec ./test/* --require babel-polyfill --require babel-register",
     "lint": "eslint ."
   },
@@ -30,6 +31,7 @@
     "eslint-plugin-import": "^2.13.0",
     "mocha": "^5.2.0",
     "nock": "^9.4.4",
+    "nodemon": "^1.18.5",
     "sinon": "^6.1.4",
     "sinon-chai": "^3.2.0"
   },

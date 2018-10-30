@@ -33,7 +33,6 @@ const oauthCallback = async (req, res, next) => {
       data: querystring.stringify(body),
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
-
     // Make a call to the France Connect API endpoint to get user data.
     if (!accessToken) {
       return res.sendStatus(401);
@@ -48,6 +47,8 @@ const oauthCallback = async (req, res, next) => {
       headers: { Authorization: `Bearer ${accessToken}` },
       url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
     });
+    // eslint-disable-next-line no-console
+    console.info(`[INFO] Scopes list : ${config.SCOPES}`);
 
     // Helper to set userInfo value available to the profile page.
     req.session.userInfo = userInfo;
