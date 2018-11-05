@@ -12,7 +12,8 @@ import oauthCallback from './controllers/oauthCallback';
 import getDgfipData from './controllers/getDgfipData';
 
 const app = express();
-
+/* eslint-disable camelcase */
+const france_connect_kit_url = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`;
 /**
  * Session config
  * About the warning on connect.session()
@@ -32,11 +33,16 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.set('view engine', 'ejs');
+
+app.set('france_connect_kit_url', france_connect_kit_url);
 app.use(express.static('public'));
 
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
-  res.render('pages/index', { isUserAuthenticated: false });
+  res.render('pages/index', {
+    isUserAuthenticated: false,
+    france_connect_kit_url: req.app.get('france_connect_kit_url'),
+  });
 });
 
 app.get('/login', (req, res) => {
@@ -53,6 +59,7 @@ app.get('/profile', (req, res) => {
   return res.render('pages/profile', {
     // get user info from session
     user: req.session.userInfo,
+    france_connect_kit_url: req.app.get('france_connect_kit_url'),
     isUserAuthenticated: true,
     isUsingFDMock: config.USE_FD,
   });
@@ -69,7 +76,10 @@ app.get('/logged-out', (req, res) => {
   req.session.idToken = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.render('pages/logged-out', { isUserAuthenticated: false });
+  res.render('pages/logged-out', {
+    isUserAuthenticated: false,
+    france_connect_kit_url: req.app.get('france_connect_kit_url'),
+  });
 });
 
 // Setting app port

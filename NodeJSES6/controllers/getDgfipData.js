@@ -23,6 +23,7 @@ const getDgfipData = async (req, res, next) => {
     return res.render('pages/profile', {
       user: req.session.userInfo,
       isUserAuthenticated: true,
+      france_connect_kit_url: req.app.get('france_connect_kit_url'),
       dgfipData,
       isUsingFDMock: config.USE_FD,
     });
