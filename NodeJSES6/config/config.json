@@ -2,6 +2,7 @@
   "FC_URL": "https://fcp.integ01.dev-franceconnect.fr",
   "FD_URL": "https://fdp.integ01.dev-franceconnect.fr",
   "FS_URL": "http://localhost:3000",
+  "FRANCE_CONNECT_KIT_PATH": "/js/franceconnect.js",
   "AUTHORIZATION_FC_PATH": "/api/v1/authorize",
   "TOKEN_FC_PATH": "/api/v1/token",
   "USERINFO_FC_PATH": "/api/v1/userinfo",
