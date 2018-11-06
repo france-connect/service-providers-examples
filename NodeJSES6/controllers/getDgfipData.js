@@ -26,6 +26,7 @@ const getDgfipData = async (req, res, next) => {
       france_connect_kit_url: req.app.get('france_connect_kit_url'),
       dgfipData,
       isUsingFDMock: config.USE_FD,
+      franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
     });
   } catch (error) {
     return next(error);

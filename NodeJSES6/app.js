@@ -41,7 +41,7 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
   res.render('pages/index', {
     isUserAuthenticated: false,
-    france_connect_kit_url: req.app.get('france_connect_kit_url'),
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
   });
 });
 
@@ -59,9 +59,9 @@ app.get('/profile', (req, res) => {
   return res.render('pages/profile', {
     // get user info from session
     user: req.session.userInfo,
-    france_connect_kit_url: req.app.get('france_connect_kit_url'),
     isUserAuthenticated: true,
     isUsingFDMock: config.USE_FD,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
   });
 });
 
@@ -77,8 +77,7 @@ app.get('/logged-out', (req, res) => {
   // Resetting the userInfo.
   req.session.userInfo = null;
   res.render('pages/logged-out', {
-    isUserAuthenticated: false,
-    france_connect_kit_url: req.app.get('france_connect_kit_url'),
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
   });
 });
 
