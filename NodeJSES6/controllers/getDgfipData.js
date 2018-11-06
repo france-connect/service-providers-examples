@@ -6,10 +6,15 @@
  */
 import axios from 'axios/index';
 import config from '../config/configManager';
+import { startDataProviderMock } from '../mocks/data_provider';
 
 const dgfipDataUrl = `${config.FD_URL}${config.DGFIP_DATA_FD_PATH}`;
 
 const getDgfipData = async (req, res, next) => {
+  if (config.USE_FD_MOCK) {
+    req.session.accessToken = `config.FAKE_ACCESS_TOKEN`;
+    startDataProviderMock(req);
+  }
   try {
     const { data: dgfipData } = await axios({
       method: 'GET',

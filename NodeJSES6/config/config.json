@@ -13,6 +13,7 @@
   "SCOPES": "openid profile birth dgfip_revenu_fiscal_de_reference_n_moins_1 dgfip_adresse_fiscale_de_taxation_n_moins_1",
   "DGFIP_DATA_FD_PATH": "/api/dgfip",
   "FAKE_ACCESS_TOKEN": "9af033eb295d0fe113988d29a26527f920114973b3a1ca7bdb44768fd0c73937",
-  "USE_FD": false,
-  "USE_FC_MOCK": true
+  "USE_FD": true,
+  "USE_FC_MOCK": true,
+  "USE_FD_MOCK": true
 }
