@@ -2,7 +2,7 @@
 
 An example of Service Provider for FranceConnect.
 
-[`Documentation`](https://partenaires.franceconnect.gouv.fr/fournisseur-service#glossary)
+[`Documentation`](https://partenaires.franceconnect.gouv.fr/fournisseur-service)
 
 ## Install
 
@@ -22,9 +22,13 @@ npm start
 
 When you start the app, the demo is available at : http://localhost:3000.
 
-To start the France Connect Authentication process, click on the France Connect button.
-You will be prompted to choose an identity provider. Choose ameli.fr or impots.gouv.fr.
-You can use the following test credentials for both providers : 1234567891011 | 123
+To start the France Connect authentication process, click on the France Connect button.
+
+You will be prompted to choose an identity provider. Choose impots.gouv.fr.
+
+You can use the following test credentials : 3_melaine | 123
+
+More credentials are available [here](https://github.com/france-connect/identity-providers-examples/blob/master/NodeJSES6/data/database.csv).
 
 ##  Run the Tests
 
