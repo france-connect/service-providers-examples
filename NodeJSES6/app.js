@@ -57,7 +57,6 @@ app.get('/profile', (req, res) => {
     // get user info from session
     user: req.session.userInfo,
     isUserAuthenticated: true,
-    isUsingFDMock: config.USE_FD,
     franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
   });
 });
