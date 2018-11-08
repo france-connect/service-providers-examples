@@ -4,6 +4,10 @@ An example of Service Provider for FranceConnect.
 
 [`Documentation`](https://partenaires.franceconnect.gouv.fr/fournisseur-service)
 
+## Prerequisites
+
+This server use [nodejs version 8.12](https://nodejs.org/en/download/).
+
 ## Install
 
 ```bash
