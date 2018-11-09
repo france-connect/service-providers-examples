@@ -28,6 +28,7 @@
     "eslint": "^5.2.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
+    "lodash": "^4.17.11",
     "mocha": "^5.2.0",
     "nock": "^9.4.4",
     "sinon": "^6.1.4",
