@@ -4,7 +4,7 @@ import chaiHttp from 'chai-http';
 import app from '../app';
 import {
   validTokenConf, invalidTokenConf, initializeMocks, cleanMocks,
-} from '../mock/france-connect';
+} from './mock/france-connect';
 
 chai.use(chaiHttp);
 const { expect } = chai;
