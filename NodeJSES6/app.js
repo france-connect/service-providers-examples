@@ -9,7 +9,7 @@ import sessionstore from 'sessionstore';
 import config from './config/configManager';
 import { getAuthorizationUrl, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
-import oauthCallbackGetData from './controllers/oauthCallbakGetData';
+import getDataCallback from './controllers/getDataCallbak';
 import getDgfipData from './controllers/getDgfipData';
 
 const app = express();
@@ -52,7 +52,7 @@ app.get('/getData', (req, res) => {
 });
 
 app.get('/callback', oauthCallback);
-app.get('/callbackGetData', oauthCallbackGetData);
+app.get('/callbackGetData', getDataCallback);
 
 app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {

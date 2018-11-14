@@ -11,7 +11,7 @@ import getDgfipData from './getDgfipData';
  * Init FranceConnect authentication login process.
  * Make every http call to the different API endpoints.
  */
-const oauthCallbackGetData = async (req, res, next) => {
+const getDataCallback = async (req, res, next) => {
   // check if the mandatory Authorization code is there.
   if (!req.query.code) {
     return res.sendStatus(400);
@@ -53,4 +53,4 @@ const oauthCallbackGetData = async (req, res, next) => {
   }
 };
 
-export default oauthCallbackGetData;
+export default getDataCallback;
