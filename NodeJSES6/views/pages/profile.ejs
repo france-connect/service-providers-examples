@@ -10,34 +10,13 @@
                 <li>Obtenir des informations de La direction générale des Finances publiques (DGFIP)</li>
             </ul>
             <br>
-            <% if (!isUsingFDMock) { %>
-            <p><b>Activer la fonctionalité ci-dessus : </b></p>
-            <ul>
-                <li>
-                    - Installer et lancer notre démonstrateur de fournisseur de donnés (nodejs_ES6).
-                    <a href="https://github.com/france-connect/data-providers-examples"
-                       aria-label="lien vers exemple fournisseur de donnés sur github"
-                       title="lien repo github fournisseur de donnés"
-                       target="_blank">
-                        lien github
-                    </a>
-                </li>
-                <li>- Passer à "true" la valeur de "USING_FD_MOCK" dans config/config.json.</li>
-                <li>- Puis cliquer sur le button ci-dessous.</li>
-            </ul>
-            <br>
-            <div class="has-text-centered">
-                <button class="button is-link"
-                        href="/callFd"
-                        aria-label="faire un appel au fournisseur de donnés"
-                        title="faire un appel au fournisseur de donnés"
-                        target="_blank"
-                        disabled>
-                    Appel à la DGFIP
-                </button>
+            <div class="column is-half">
+                <ul>
+                    <li>Obtenir des informations de La direction générale des Finances publiques (DGFIP)</li>
+                </ul>
+                <br>
+                <div class="has-text-centered"><a class="button is-link" href="/callFd">Appel à la DGFIP</a></div>
             </div>
-            <% } else { %>
-            <div class="has-text-centered"><a class="button is-link" href="/callFd">Appel à la DGFIP</a></div>
             <% } %>
         </div>
         <% if (locals.dgfipData) { %>
