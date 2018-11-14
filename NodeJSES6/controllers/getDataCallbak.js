@@ -5,12 +5,13 @@
 import axios from 'axios';
 import querystring from 'querystring';
 import config from '../config/configManager';
+import getDgfipData from './getDgfipData';
 
 /**
  * Init FranceConnect authentication login process.
  * Make every http call to the different API endpoints.
  */
-const oauthCallback = async (req, res, next) => {
+const getDataCallback = async (req, res, next) => {
   // check if the mandatory Authorization code is there.
   if (!req.query.code) {
     return res.sendStatus(400);
@@ -19,7 +20,7 @@ const oauthCallback = async (req, res, next) => {
   // Set request params.
   const body = {
     grant_type: 'authorization_code',
-    redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`,
+    redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_GETDATA_PATH}`,
     client_id: config.CLIENT_ID,
     client_secret: config.CLIENT_SECRET,
     code: req.query.code,
@@ -33,6 +34,7 @@ const oauthCallback = async (req, res, next) => {
       data: querystring.stringify(body),
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
+
     // Make a call to the France Connect API endpoint to get user data.
     if (!accessToken) {
       return res.sendStatus(401);
@@ -42,21 +44,13 @@ const oauthCallback = async (req, res, next) => {
     req.session.accessToken = accessToken;
     req.session.idToken = idToken;
 
-    const { data: userInfo } = await axios({
-      method: 'GET',
-      headers: { Authorization: `Bearer ${accessToken}` },
-      url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
-    });
     // eslint-disable-next-line no-console
-    console.info(`[INFO] Scopes list : ${config.DGFIP_SCOPES}`);
+    console.info(`[INFO] Scopes list : ${config.SCOPES}`);
 
-    // Helper to set userInfo value available to the profile page.
-    req.session.userInfo = userInfo;
-
-    return res.redirect('profile');
+    getDgfipData(req, res, next);
   } catch (error) {
     return next(error);
   }
 };
 
-export default oauthCallback;
+export default getDataCallback;

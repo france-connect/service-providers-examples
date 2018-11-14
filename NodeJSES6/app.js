@@ -7,8 +7,9 @@ import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
 import config from './config/configManager';
-import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
+import { getAuthorizationUrl, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
+import getDataCallback from './controllers/getDataCallbak';
 import getDgfipData from './controllers/getDgfipData';
 
 const app = express();
@@ -36,14 +37,22 @@ app.use(express.static('public'));
 
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
-  res.render('pages/index', { isUserAuthenticated: false });
+  res.render('pages/index', {
+    isUserAuthenticated: false,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+  });
 });
 
 app.get('/login', (req, res) => {
   res.redirect(getAuthorizationUrl());
 });
 
+app.get('/getData', (req, res) => {
+  res.redirect(getAuthorizationUrlToGetDgfipData());
+});
+
 app.get('/callback', oauthCallback);
+app.get('/callbackGetData', getDataCallback);
 
 app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {
@@ -55,6 +64,7 @@ app.get('/profile', (req, res) => {
     user: req.session.userInfo,
     isUserAuthenticated: true,
     isUsingFDMock: config.USE_FD,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
   });
 });
 
@@ -69,7 +79,10 @@ app.get('/logged-out', (req, res) => {
   req.session.idToken = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.render('pages/logged-out', { isUserAuthenticated: false });
+  res.render('pages/logged-out', {
+    isUserAuthenticated: false,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+  });
 });
 
 // Setting app port
