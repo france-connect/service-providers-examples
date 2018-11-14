@@ -7,8 +7,9 @@ import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
 import config from './config/configManager';
-import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
+import { getAuthorizationUrl, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
+import oauthCallbackGetData from './controllers/oauthCallbakGetData';
 import getDgfipData from './controllers/getDgfipData';
 
 const app = express();
@@ -46,7 +47,12 @@ app.get('/login', (req, res) => {
   res.redirect(getAuthorizationUrl());
 });
 
+app.get('/getData', (req, res) => {
+  res.redirect(getAuthorizationUrlToGetDgfipData());
+});
+
 app.get('/callback', oauthCallback);
+app.get('/callbackGetData', oauthCallbackGetData);
 
 app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {

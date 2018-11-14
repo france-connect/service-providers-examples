@@ -3,46 +3,38 @@
 <% include ../includes/head.ejs %>
 <body>
 <% include ../includes/header.ejs %>
-<section class="container custom-content">
-    <div class="columns">
-        <div class="column is-half">
-            <ul>
-                <li>Obtenir des informations de La direction générale des Finances publiques (DGFIP)</li>
-            </ul>
-            <br>
-            <div class="column is-half">
-                <ul>
-                    <li>Obtenir des informations de La direction générale des Finances publiques (DGFIP)</li>
-                </ul>
-                <br>
-                <div class="has-text-centered"><a class="button is-link" href="/callFd">Appel à la DGFIP</a></div>
-            </div>
-            <% } %>
-        </div>
+<div>
+    <p class="subtitle has-text-centered margin">Obtenir des informations de La direction générale des Finances publiques</p>
+</div>
+<section class="container section is-medium has-text-centered">
+    <div class="columns is-centered">
         <% if (locals.dgfipData) { %>
-        <table class="table">
-            <thead>
-            <tr class="has-text-grey-dark">
-                <th>Informations</th>
-                <th>Valeurs</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="has-text-grey-dark">
-                <th>Revenu Fiscal de Référence (RFR)</th>
-                <td><%= dgfipData.revenuFiscalDeReference %></td>
-            </tr>
-            <tr class="has-text-grey-dark">
-                <th>Nombre de parts</th>
-                <td><%= dgfipData.nombreDeParts %></td>
-            </tr>
-            <tr class="has-text-grey-dark">
-                <th>Adresse fiscale de taxation</th>
-                <td><%= dgfipData.adresseFiscaleDeTaxation %></td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table">
+                <thead>
+                <tr class="has-text-grey-dark">
+                    <th>Informations</th>
+                    <th>Valeurs</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="has-text-grey-dark">
+                    <th>Revenu Fiscal de Référence (RFR)</th>
+                    <td><%= dgfipData.revenuFiscalDeReference %></td>
+                </tr>
+                <tr class="has-text-grey-dark">
+                    <th>Nombre de parts</th>
+                    <td><%= dgfipData.nombreDeParts %></td>
+                </tr>
+                <tr class="has-text-grey-dark">
+                    <th>Adresse fiscale de taxation</th>
+                    <td><%= dgfipData.adresseFiscaleDeTaxation %></td>
+                </tr>
+                </tbody>
+            </table>
         <% } %>
+    </div>
+    <div>
+        <a class="button is-link" href="/getData">Appel à la DGFIP</a>
     </div>
 </section>
 <% include ../includes/footer.ejs %>
