@@ -11,6 +11,13 @@ const dgfipDataUrl = `${config.FD_URL}${config.DGFIP_DATA_FD_PATH}`;
  */
 const getDgfipData = async (req, res, next) => {
   try {
+    // TODO remove this
+    axios.interceptors.response.use((response) => {
+      // Do something with response data
+      console.log(response, 'response getDgfipData');
+      return response;
+    }, error => Promise.reject(error));
+
     const { data: dgfipData } = await axios({
       method: 'GET',
       // only valid if it's used with data-providers-example/nodejs ES6 code from France Connect
@@ -19,6 +26,8 @@ const getDgfipData = async (req, res, next) => {
       url: dgfipDataUrl,
       headers: { Authorization: `Bearer ${req.session.accessToken}` },
     });
+
+    // req.session.idToken = idToken; // TODO store decoded object ?
 
     return res.render('pages/profile', {
       user: req.session.userInfo,

@@ -16,7 +16,7 @@ const app = express();
 /**
  * Session config
  * About the warning on connect.session()
- * @see {@link https://github.com/expressjs/session/issues/556}
+ * @see {@link https://github.com/expressjs/session/issues/556} // TODO remove this
  * @see {@link https://github.com/expressjs/session/blob/master/README.md#compatible-session-stores}
  */
 app.use(session({
@@ -37,6 +37,7 @@ app.use(express.static('public'));
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
   res.render('pages/index', {
+    // TODO maybe remove isUserAuthenticated force set (redundant with req.session)
     isUserAuthenticated: false,
     franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
   });

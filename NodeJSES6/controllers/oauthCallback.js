@@ -3,7 +3,7 @@
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
 import axios from 'axios';
-import querystring from 'querystring';
+import querystring from 'querystring'; // TODO use node querystring instead
 import config from '../config/configManager';
 
 /**
@@ -26,6 +26,10 @@ const oauthCallback = async (req, res, next) => {
   };
 
   try {
+    // TODO remove this
+    axios.interceptors.response.use(response => response,
+      error => Promise.reject(error));
+
     // Request access token.
     const { data: { access_token: accessToken, id_token: idToken } } = await axios({
       method: 'POST',

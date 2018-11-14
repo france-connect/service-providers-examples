@@ -49,3 +49,6 @@ You can use a local instance of this Data Provider instead:
 ```bash
 npm test
 ```
+
+TODO: remove closed branches
+TODO: rework file architecture
