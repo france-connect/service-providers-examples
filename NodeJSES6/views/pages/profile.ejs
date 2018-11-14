@@ -14,15 +14,15 @@
             <p><b>Activer la fonctionalité ci-dessus : </b></p>
             <ul>
                 <li>
-                    - Installer et lancer
-                    <a href="https://github.com/france-connect/data-providers-examples/tree/master/nodejs_ES6"
+                    - Installer et lancer notre démonstrateur de fournisseur de donnés (nodejs_ES6).
+                    <a href="https://github.com/france-connect/data-providers-examples"
                        aria-label="lien vers exemple fournisseur de donnés sur github"
                        title="lien repo github fournisseur de donnés"
                        target="_blank">
-                        notre démonstrateur de fournisseur de donnés en mode connecté
+                        lien github
                     </a>
                 </li>
-                <li>- Passer à "true" la valeur de "USE_FD" dans config/config.json et redémarrer l'application</li>
+                <li>- Passer à "true" la valeur de "USING_FD_MOCK" dans config/config.json.</li>
                 <li>- Puis cliquer sur le button ci-dessous.</li>
             </ul>
             <br>
@@ -38,7 +38,6 @@
             </div>
             <% } else { %>
             <div class="has-text-centered"><a class="button is-link" href="/callFd">Appel à la DGFIP</a></div>
-            <% } %>
         </div>
         <% if (locals.dgfipData) { %>
         <table class="table">
