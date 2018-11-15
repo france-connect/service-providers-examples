@@ -1,5 +1,7 @@
 # Service-providers-example
 
+## :warning: Deprecation warning :warning: this repository has been moved to https://github.com/france-connect/service-provider-example
+
 An example of Service Provider for FranceConnect.
 
 [`Documentation`](https://partenaires.franceconnect.gouv.fr/fournisseur-service)
