@@ -9,6 +9,7 @@ import sessionstore from 'sessionstore';
 import config from './config/configManager';
 import { getAuthorizationUrl, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
+import getDataCallback from './controllers/getDataCallbak';
 import getDgfipData from './controllers/getDgfipData';
 
 const app = express();
@@ -44,6 +45,10 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.redirect(getAuthorizationUrl());
+});
+
+app.get('/getData', (req, res) => {
+  res.redirect(getAuthorizationUrlToGetDgfipData());
 });
 
 app.get('/callback', oauthCallback);

@@ -9,11 +9,9 @@ export const getAuthorizationUrl = () => `${config.FC_URL}${config.AUTHORIZATION
   + `response_type=code&client_id=${config.CLIENT_ID}&redirect_uri=${config.FS_URL}`
   + `${config.CALLBACK_FS_PATH}&scope=${config.AUTH_SCOPES}&state=customState11&nonce=customNonce11`;
 
-
 export const getAuthorizationUrlToGetDgfipData = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.CLIENT_ID}&redirect_uri=${config.FS_URL}`
   + `${config.CALLBACK_FS_GETDATA_PATH}&scope=${config.DGFIP_SCOPES}&state=customState11&nonce=customNonce11`;
-
 
 /**
  * Format the url 's that is used in a redirect call to France Connect logout API endpoint
