@@ -6,24 +6,41 @@
 <section class="container custom-content">
     <div class="columns">
         <div class="column is-half">
+            <% if (locals.user) { %>
+                <table class="table">
+                    <thead>
+                    <tr class="has-text-grey-dark">
+                        <th>Vos Informations</th>
+                        <th>Valeurs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="has-text-grey-dark">
+                        <th>Nom / Prénom</th>
+                        <td><%= user.family_name %> <%= user.given_name %></td>
+                    </tr>
+                    <tr class="has-text-grey-dark">
+                        <th>Date / Pay de naissance </th>
+                        <td><%= user.birthdate %> - <% if (user.birthcountry === '99100') {%> France <% } %></td>
+                    </tr>
+                    <tr class="has-text-grey-dark">
+                        <th>Sexe</th>
+                        <td><%= user.gender %></td>
+                    </tr>
+                    </tbody>
+                </table>
+            <% } %>
             <ul>
                 <li>Obtenir des informations de La direction générale des Finances publiques (DGFIP)</li>
             </ul>
             <br>
-            <div class="column is-half">
-                <ul>
-                    <li>Obtenir des informations de La direction générale des Finances publiques (DGFIP)</li>
-                </ul>
-                <br>
-                <div class="has-text-centered"><a class="button is-link" href="/callFd">Appel à la DGFIP</a></div>
-            </div>
-            <% } %>
+            <div class="has-text-centered"><a class="button is-link" href="/getData">Appel à la DGFIP</a></div>
         </div>
         <% if (locals.dgfipData) { %>
         <table class="table">
             <thead>
             <tr class="has-text-grey-dark">
-                <th>Informations</th>
+                <th>Informations DGFIP</th>
                 <th>Valeurs</th>
             </tr>
             </thead>

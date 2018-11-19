@@ -7,7 +7,7 @@ import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
 import config from './config/configManager';
-import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
+import { getAuthorizationUrl, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
 import getDgfipData from './controllers/getDgfipData';
 
@@ -47,6 +47,8 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/callback', oauthCallback);
+app.get('/callbackGetData', getDgfipData);
+app.get('/getData', (req, res) => res.redirect(getAuthorizationUrlToGetDgfipData()));
 
 app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {
@@ -73,10 +75,7 @@ app.get('/logged-out', (req, res) => {
   req.session.idToken = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.render('pages/logged-out', {
-    isUserAuthenticated: false,
-    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
-  });
+  res.redirect('/');
 });
 
 // Setting app port
