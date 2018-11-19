@@ -4,63 +4,69 @@
 <body>
 <% include ../includes/header.ejs %>
 <section class="container custom-content">
-    <div class="columns">
-        <div class="column is-half">
-            <% if (locals.user) { %>
-                <table class="table">
-                    <thead>
-                    <tr class="has-text-grey-dark">
-                        <th>Vos Informations</th>
-                        <th>Valeurs</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="has-text-grey-dark">
-                        <th>Nom / Prénom</th>
-                        <td><%= user.family_name %> <%= user.given_name %></td>
-                    </tr>
-                    <tr class="has-text-grey-dark">
-                        <th>Date / Pay de naissance </th>
-                        <td><%= user.birthdate %> - <% if (user.birthcountry === '99100') {%> France <% } %></td>
-                    </tr>
-                    <tr class="has-text-grey-dark">
-                        <th>Sexe</th>
-                        <td><%= user.gender %></td>
-                    </tr>
-                    </tbody>
-                </table>
-            <% } %>
+    <section class="section is-small">
+        <div class="has-text-centered">
             <ul>
                 <li>Obtenir des informations de La Direction Générale des Finances Publiques (DGFIP)</li>
             </ul>
             <br>
             <div class="has-text-centered"><a class="button is-link" href="/getData">Appel à la DGFIP</a></div>
         </div>
-        <% if (locals.dgfipData) { %>
-        <table class="table">
-            <thead>
-            <tr class="has-text-grey-dark">
-                <th>Informations DGFIP</th>
-                <th>Valeurs</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="has-text-grey-dark">
-                <th>Revenu Fiscal de Référence (RFR)</th>
-                <td><%= dgfipData.revenuFiscalDeReference %></td>
-            </tr>
-            <tr class="has-text-grey-dark">
-                <th>Nombre de parts</th>
-                <td><%= dgfipData.nombreDeParts %></td>
-            </tr>
-            <tr class="has-text-grey-dark">
-                <th>Adresse fiscale de taxation</th>
-                <td><%= dgfipData.adresseFiscaleDeTaxation %></td>
-            </tr>
-            </tbody>
-        </table>
-        <% } %>
-    </div>
+    </section>
+    <section class="section is-small">
+        <div class="columns">
+            <div class="column is-half">
+                <% if (locals.user) { %>
+                    <table class="table">
+                        <thead>
+                        <tr class="has-text-grey-dark">
+                            <th>Vos Informations</th>
+                            <th>Valeurs</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="has-text-grey-dark">
+                            <th>Nom / Prénom</th>
+                            <td><%= user.family_name %> <%= user.given_name %></td>
+                        </tr>
+                        <tr class="has-text-grey-dark">
+                            <th>Date / Pay de naissance </th>
+                            <td><%= user.birthdate %> - <% if (user.birthcountry === '99100') {%> France <% } %></td>
+                        </tr>
+                        <tr class="has-text-grey-dark">
+                            <th>Sexe</th>
+                            <td><%= user.gender %></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+            <% if (locals.dgfipData) { %>
+                <table class="table">
+                    <thead>
+                    <tr class="has-text-grey-dark">
+                        <th>Informations DGFIP</th>
+                        <th>Valeurs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="has-text-grey-dark">
+                        <th>Revenu Fiscal de Référence (RFR)</th>
+                        <td><%= dgfipData.revenuFiscalDeReference %></td>
+                    </tr>
+                    <tr class="has-text-grey-dark">
+                        <th>Nombre de parts</th>
+                        <td><%= dgfipData.nombreDeParts %></td>
+                    </tr>
+                    <tr class="has-text-grey-dark">
+                        <th>Adresse fiscale de taxation</th>
+                        <td><%= dgfipData.adresseFiscaleDeTaxation %></td>
+                    </tr>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </section>
 </section>
 <% include ../includes/footer.ejs %>
 </body>
