@@ -79,7 +79,10 @@ app.get('/logged-out', (req, res) => {
   req.session.idToken = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.redirect('/');
+  res.render('pages/logged-out', {
+    isUserAuthenticated: false,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+  });
 });
 
 // Setting app port
