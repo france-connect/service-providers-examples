@@ -36,7 +36,10 @@ app.use(express.static('public'));
 
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
-  res.render('pages/index', { isUserAuthenticated: false });
+  res.render('pages/index', {
+    isUserAuthenticated: false,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+  });
 });
 
 app.get('/login', (req, res) => {
@@ -55,6 +58,8 @@ app.get('/profile', (req, res) => {
     user: req.session.userInfo,
     isUserAuthenticated: true,
     isUsingFDMock: config.USE_FD,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+
   });
 });
 
@@ -69,7 +74,10 @@ app.get('/logged-out', (req, res) => {
   req.session.idToken = null;
   // Resetting the userInfo.
   req.session.userInfo = null;
-  res.render('pages/logged-out', { isUserAuthenticated: false });
+  res.render('pages/logged-out', {
+    isUserAuthenticated: false,
+    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+  });
 });
 
 // Setting app port
