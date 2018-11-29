@@ -45,11 +45,12 @@ const getDgfipData = async (req, res, next) => {
       url: dgfipDataUrl,
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-
+    console.log(JSON.stringify(dgfipData, null, 2))
     return res.render('pages/dgfip_via_fc', {
       user: req.session.userInfo,
       isUserAuthenticated: true,
       dgfipData,
+      dgfipDataRaw: JSON.stringify(dgfipData, null, 2),
       isUsingFDMock: config.USE_FD,
       franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
     });
