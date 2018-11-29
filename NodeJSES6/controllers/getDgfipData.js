@@ -46,7 +46,7 @@ const getDgfipData = async (req, res, next) => {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    return res.render('pages/profile', {
+    return res.render('pages/dgfip_via_fc', {
       user: req.session.userInfo,
       isUserAuthenticated: true,
       dgfipData,

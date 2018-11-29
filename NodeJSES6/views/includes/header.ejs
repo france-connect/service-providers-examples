@@ -2,7 +2,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-end">
             <div class="navbar-item">
-                <% if (isUserAuthenticated) {%>
+                <% if (locals.user) {%>
                 <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
                     <a href="#" class="has-text-link" >
                         <%= user.family_name %> <%= user.given_name %>
