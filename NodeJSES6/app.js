@@ -77,13 +77,14 @@ app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {
     return res.sendStatus(401);
   }
+  console.log(req.session.userInfo)
   if (req.session.usage === "agents") {
     return res.render('pages/profile_fca', {
       // get user info from session
       user: req.session.userInfo,
       franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
     });
-  } else {
+  } else if (req.session.usage === "particuliers"){
     return res.render('pages/profile_fcp', {
       // get user info from session
       user: req.session.userInfo,
