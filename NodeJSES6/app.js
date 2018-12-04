@@ -5,6 +5,7 @@
 import express from 'express';
 import logger from 'morgan';
 import session from 'express-session';
+const parser = require('body-parser');
 import sessionstore from 'sessionstore';
 import config from './config/configManager';
 import { getAuthorizationUrl, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
@@ -27,6 +28,11 @@ app.use(session({
   resave: true,
 }));
 
+app.use(
+  parser.json(),
+  parser.urlencoded({ extended: false, }),
+)
+
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
 }
@@ -37,9 +43,21 @@ app.use(express.static('public'));
 // Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
 app.get('/', (req, res) => {
   res.render('pages/index', {
-    isUserAuthenticated: false,
     franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
   });
+});
+
+app.post('/', (req, res) => {
+  console.log(req.body)
+  if(req.body.usage === "agents"){
+    res.render('pages/index_fca', {
+      franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+    });
+  } else {
+    res.render('pages/index_fcp', {
+      franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+    })
+  }
 });
 
 app.get('/login', (req, res) => {

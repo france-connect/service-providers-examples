@@ -5,15 +5,23 @@
 <% include ../includes/header.ejs %>
 <section class="section is-medium">
     <div class="container has-text-centered">
-        <div class="columns">
-            <div class="column is-half">
-                <!-- FC btn -->
-                <a href="/login">
-                    <img src="img/FCboutons-10.png" alt="">
-                </a>
-            </div>
-            <div class="column is-half">
-                <a class="button is-link is-medium" href="/getData">Récupérer mes informations DGFIP via FranceConnect</a>
+        <p class="subtitle is-4">
+            Choisissez entre un usage pour les
+            <a href="https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service" title="Documentation fournisseur de service particulier">particuliers</a>
+            ou pour les
+            <a href="https://partenaires.franceconnect.gouv.fr/fca/fournisseur-service" title="Documentation Fournisseur de service agent">agents</a>.
+        </p>
+        <div class="column">
+            <div class="select is-rounded">
+                <form action="/" method="post" id="usageForm" name="usageForm">
+                    <select name="usage">
+                        <option>Choisissez un usage</option>
+                        <option value="particuliers">Particuliers</option>
+                        <option value="agents">Agents</option>
+                    </select>
+                        <br>
+                        <button type="submit" class="button is-link">Valider</button>
+                </form>
             </div>
         </div>
     </div>
