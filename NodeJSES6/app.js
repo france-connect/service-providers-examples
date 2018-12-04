@@ -77,14 +77,22 @@ app.get('/profile', (req, res) => {
   if (!req.session.accessToken) {
     return res.sendStatus(401);
   }
+  if (req.session.usage === "agents") {
+    return res.render('pages/profile_fca', {
+      // get user info from session
+      user: req.session.userInfo,
+      franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+    });
+  } else {
+    return res.render('pages/profile_fcp', {
+      // get user info from session
+      user: req.session.userInfo,
+      isUserAuthenticated: true,
+      isUsingFDMock: config.USE_FD,
+      franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+    });
+  }
 
-  return res.render('pages/profile', {
-    // get user info from session
-    user: req.session.userInfo,
-    isUserAuthenticated: true,
-    isUsingFDMock: config.USE_FD,
-    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
-  });
 });
 
 app.get('/callFd', getDgfipData);
