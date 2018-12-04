@@ -64,7 +64,7 @@ app.post('/', (req, res) => {
 app.get('/login', (req, res) => {
   if (req.session.usage === "agents") {
     res.redirect(getAuthorizationUrlFCA());
-  } else {
+  } else if (req.session.usage === "particuliers"){
     res.redirect(getAuthorizationUrlFCP());
   }
 });
