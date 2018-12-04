@@ -8,7 +8,7 @@ import session from 'express-session';
 const parser = require('body-parser');
 import sessionstore from 'sessionstore';
 import config from './config/configManager';
-import { getAuthorizationUrl, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
+import { getAuthorizationUrlFCP,getAuthorizationUrlFCA, getAuthorizationUrlToGetDgfipData, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
 import getDgfipData from './controllers/getDgfipData';
 
@@ -49,6 +49,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   console.log(req.body)
+  req.session.usage = req.body.usage
   if(req.body.usage === "agents"){
     res.render('pages/index_fca', {
       franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
@@ -61,7 +62,11 @@ app.post('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.redirect(getAuthorizationUrl());
+  if (req.session.usage === "agents") {
+    res.redirect(getAuthorizationUrlFCA());
+  } else {
+    res.redirect(getAuthorizationUrlFCP());
+  }
 });
 
 app.get('/callback', oauthCallback);

@@ -5,10 +5,13 @@
  */
 import config from '../config/configManager';
 // TODO hard code state et nonce because they normally generate from every request
-export const getAuthorizationUrl = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
+export const getAuthorizationUrlFCP = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.CLIENT_ID}&redirect_uri=${config.FS_URL}`
-  + `${config.CALLBACK_FS_PATH}&scope=${config.AUTH_SCOPES}&state=customState11&nonce=customNonce11`;
+  + `${config.CALLBACK_FS_PATH}&scope=${config.AUTH_FCP_SCOPES}&state=customState11&nonce=customNonce11`;
 
+export const getAuthorizationUrlFCA = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
+  + `response_type=code&client_id=${config.CLIENT_ID}&redirect_uri=${config.FS_URL}`
+  + `${config.CALLBACK_FS_PATH}&scope=${config.AUTH_FCA_SCOPES}&state=customState11&nonce=customNonce11`;
 
 export const getAuthorizationUrlToGetDgfipData = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.CLIENT_ID}&redirect_uri=${config.FS_URL}`
