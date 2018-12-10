@@ -48,7 +48,12 @@ const oauthCallback = async (req, res, next) => {
       url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
     });
     // eslint-disable-next-line no-console
-    console.info(`[INFO] Scopes list : ${config.SCOPES}`);
+    if (config.AUTH_FCP_SCOPES){
+      console.info(`[INFO] Scopes list : ${config.AUTH_FCP_SCOPES}`);
+    }
+    if(config.AUTH_FCA_SCOPES) {
+      console.info(`[INFO] Scopes list : ${config.AUTH_FCA_SCOPES}`);
+    }
 
     // Helper to set userInfo value available to the profile page.
     req.session.userInfo = userInfo;
