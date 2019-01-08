@@ -9,6 +9,13 @@ const dgfipDataUrl = `${config.FD_URL}${config.DGFIP_DATA_FD_PATH}`;
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-donnees }
  * @see @link{ https://github.com/france-connect/data-providers-examples }
  */
+
+import axios from 'axios/index';
+import config from '../config/configManager';
+
+const dgfipDataUrl = `${config.FD_URL}${config.DGFIP_DATA_FD_PATH}`;
+
+
 const getDgfipData = async (req, res, next) => {
   try {
     const { data: dgfipData } = await axios({
@@ -26,6 +33,7 @@ const getDgfipData = async (req, res, next) => {
       dgfipData,
       isUsingFDMock: config.USE_FD_MOCK,
       franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+
     });
   } catch (error) {
     return next(error);

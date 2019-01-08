@@ -62,6 +62,7 @@ app.get('/profile', (req, res) => {
     isUserAuthenticated: true,
     isUsingFDMock: config.USE_FD_MOCK,
     franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
+
   });
 });
 
