@@ -25,7 +25,7 @@
                     <% } else if (userInfo.gender.toLowerCase() === 'female') {  %>
                         Mme
                     <% } %>
-                    <%= userInfo.given_name + ' ' + userInfo.family_name %>
+                    <%= userInfo.given_name + ' ' + userInfo.usual_name %>
                 </a><span class="caret"></span>
             </h4>
         </div>
@@ -41,7 +41,7 @@
         <h4>Info agent</h4>
         <ul class="unstyled">
             <li><b>given_name</b>: <%= userInfo.given_name %></li>
-            <li><b>family_name</b>: <%= userInfo.family_name %></li>
+            <li><b>usual_name</b>: <%= userInfo.usual_name %></li>
             <li><b>birthdate</b>: <%= userInfo.birthdate %></li>
             <li><b>gender</b>: <%= userInfo.gender %></li>
             <li><b>birthplace</b>: <%= userInfo.birthplace %></li>
