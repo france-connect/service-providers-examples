@@ -14,7 +14,14 @@
             <div class="span3">
                 <% if (user) { %>
                 <div id="fconnect-profile" data-fc-logout-url="/logout">
-                    <a href="#"><%= user %></a><span class="caret"></span>
+                    <a href="#">
+                        <% if (userInfo.family_name === "" || userInfo.family_name === undefined){ %>
+                            <%= userInfo.given_name %> <%= userInfo.usual_name %>
+                            <% } else { %>
+    
+                                <%= userInfo.given_name %> <%= userInfo.given_name %>
+                                <% } %>
+                    </a><span class="caret"></span>
                 </div>
                 <% } %>
                 <div class="logo-demo">DEMO</div>
