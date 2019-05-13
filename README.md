@@ -1,6 +1,6 @@
 # Fournisseur de Service
 
-Documentation can be found [here](https://github.com/france-connect/service-providers-examples/tree/master/NodeJSES6).
+## :warning: Deprecation warning :warning: this repository has been moved to https://github.com/france-connect/service-provider-example
 
 ## Autres exemples de fournisseurs de services pour France-connect :
 
